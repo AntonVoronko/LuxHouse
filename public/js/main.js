@@ -3,6 +3,7 @@ require('angular');
 require('angular-ui-router');
 require('angular-resource');
 
+var indexController = require('./index/js/indexController');
 var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
 var contactController = require('./contact/js/contactController');
@@ -15,41 +16,54 @@ var galleryController = require('./gallery/js/galleryController');
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
-  $urlRouterProvider.otherwise("/main");
+  $urlRouterProvider.otherwise("/public/main");
   $stateProvider
-    .state('main', {
+    .state('index', {
+      url: '/public',
+      templateUrl: 'index/start.html',
+      controller: indexController,
+      controllerAs: 'ctrl'
+    })
+
+    .state('index.main', {
       url: '/main',
       templateUrl: 'main/main.html',
       controller: mainController,
       controllerAs: 'ctrl'
     })
-    .state('about-us', {
+    .state('index.about-us', {
       url: '/about-us',
       templateUrl: 'about-us/about-us.html',
       controller: aboutUsController,
       controllerAs: 'ctrl'
     })
-    .state('contact', {
+    .state('index.contact', {
       url: '/contact',
       templateUrl: 'contact/contact.html',
       controller: contactController,
       controllerAs: 'ctrl'
     })
-    .state('new', {
-      url: '/new',
+    .state('index.news', {
+      url: '/news',
       templateUrl: 'new/new.html',
       controller: newController,
       controllerAs: 'ctrl'
     })
-    .state('feedback', {
+    .state('index.feedback', {
       url: '/feedback',
       templateUrl: 'feedback/feedback.html',
       controller: feedbackController,
       controllerAs: 'ctrl'
     })
-    .state('our-works', {
+    .state('index.our-works', {
       url: '/our-works',
       templateUrl: 'our-works/our-works.html',
+      controller: ourWorksController,
+      controllerAs: 'ctrl'
+    })
+    .state('index.new-full', {
+      url: '/new-full',
+      templateUrl: 'our-works/new-full.html',
       controller: ourWorksController,
       controllerAs: 'ctrl'
     })
@@ -92,14 +106,15 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
   //     $locationProvider.html5Mode(true);
   //   }
 })
-.controller('mainController', [ mainController])
+.controller('indexController', [indexController])
+.controller('mainController', [mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
 .controller('newController', [newController])
 .controller('feedbackController', [feedbackController])
 .controller('ourWorksController', [ourWorksController])
 .controller('galleryController', [galleryController]);
-},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":3,"./feedback/js/feedbackController":4,"./gallery/js/galleryController":5,"./main/js/mainController":6,"./new/js/newController":7,"./our-works/js/ourWorksController":8,"angular":13,"angular-resource":10,"angular-ui-router":11}],2:[function(require,module,exports){
+},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":3,"./feedback/js/feedbackController":4,"./gallery/js/galleryController":5,"./index/js/indexController":6,"./main/js/mainController":7,"./new/js/newController":8,"./our-works/js/ourWorksController":9,"angular":14,"angular-resource":11,"angular-ui-router":12}],2:[function(require,module,exports){
 module.exports = aboutUsController;
 
 function aboutUsController () {
@@ -128,27 +143,45 @@ function galleryController() {
 };
 galleryController.$inject = [];
 },{}],6:[function(require,module,exports){
+module.exports = indexController;
+
+function indexController () {
+	this.showForm = function() {
+		this.tumblerform = true;
+	};
+	this.hideForm = function() {
+		this.tumblerform = false;
+	};
+
+	this.showNav = function() {
+		if(this.tumblerNav)
+			this.tumblerNav = false
+		else this.tumblerNav = true;
+	}
+};
+indexController.$inject = [];
+},{}],7:[function(require,module,exports){
 module.exports = mainController;
 
 function mainController () {
-
+	
 };
 mainController.$inject = [];
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = newController;
 
 function newController () {
 
 };
 newController.$inject = [];
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = usWorksController;
 
 function usWorksController () {
 
 };
 usWorksController.$inject = [];
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1013,11 +1046,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":9}],11:[function(require,module,exports){
+},{"./angular-resource":10}],12:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -5594,7 +5627,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -37363,8 +37396,8 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":12}]},{},[1]);
+},{"./angular":13}]},{},[1]);

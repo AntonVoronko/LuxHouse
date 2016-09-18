@@ -2,6 +2,7 @@ require('angular');
 require('angular-ui-router');
 require('angular-resource');
 
+var indexController = require('./index/js/indexController');
 var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
 var contactController = require('./contact/js/contactController');
@@ -14,41 +15,54 @@ var galleryController = require('./gallery/js/galleryController');
 var app = angular.module('app', ['ui.router', 'ngResource'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
-  $urlRouterProvider.otherwise("/main");
+  $urlRouterProvider.otherwise("/public/main");
   $stateProvider
-    .state('main', {
+    .state('index', {
+      url: '/public',
+      templateUrl: 'index/start.html',
+      controller: indexController,
+      controllerAs: 'ctrl'
+    })
+
+    .state('index.main', {
       url: '/main',
       templateUrl: 'main/main.html',
       controller: mainController,
       controllerAs: 'ctrl'
     })
-    .state('about-us', {
+    .state('index.about-us', {
       url: '/about-us',
       templateUrl: 'about-us/about-us.html',
       controller: aboutUsController,
       controllerAs: 'ctrl'
     })
-    .state('contact', {
+    .state('index.contact', {
       url: '/contact',
       templateUrl: 'contact/contact.html',
       controller: contactController,
       controllerAs: 'ctrl'
     })
-    .state('new', {
-      url: '/new',
+    .state('index.news', {
+      url: '/news',
       templateUrl: 'new/new.html',
       controller: newController,
       controllerAs: 'ctrl'
     })
-    .state('feedback', {
+    .state('index.feedback', {
       url: '/feedback',
       templateUrl: 'feedback/feedback.html',
       controller: feedbackController,
       controllerAs: 'ctrl'
     })
-    .state('our-works', {
+    .state('index.our-works', {
       url: '/our-works',
       templateUrl: 'our-works/our-works.html',
+      controller: ourWorksController,
+      controllerAs: 'ctrl'
+    })
+    .state('index.new-full', {
+      url: '/new-full',
+      templateUrl: 'our-works/new-full.html',
       controller: ourWorksController,
       controllerAs: 'ctrl'
     })
@@ -91,7 +105,8 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
   //     $locationProvider.html5Mode(true);
   //   }
 })
-.controller('mainController', [ mainController])
+.controller('indexController', [indexController])
+.controller('mainController', [mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
 .controller('newController', [newController])

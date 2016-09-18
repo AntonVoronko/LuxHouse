@@ -1,0 +1,47 @@
+<header>    
+        <a ui-sref="index.main"><img src="../public/img/logo.jpg" alt="Логотип" class="logo"></a>
+        <nav class="header__nav">
+        <ul class="header__nav__languages nav">
+          <li><a href="" class="header__nav__languages__link">УКР</a></li>
+          <li><a href="" class="header__nav__languages__link">РУС</a></li>
+          <li><a href="" class="header__nav__languages__link">ENG</a></li>
+        </ul>
+        <ul class="header__nav__sections nav">
+          <li><a ui-sref="index.about-us" class="header__nav__sections__link">О НАС</a></li>
+          <li><a href="" class="header__nav__sections__link" ng-click="ctrl.showNav()">УСЛУГИ <span class="header__nav__sections_arrow"></span></a>
+          <ul ng-show="ctrl.tumblerNav">
+            <li><a href="">11111</a></li>
+            <li><a href="">11111</a></li>
+            <li><a href="">11111</a></li>
+          </ul>
+          </li>
+          <li><a ui-sref="index.our-works" class="header__nav__sections__link">НАШИ РАБOТЫ</a></li>
+          <li><a ui-sref="index.news" class="header__nav__sections__link">НОВОСТИ</a></li>
+          <li><a ui-sref="index.feedback" class="header__nav__sections__link">ОТЗЫВЫ</a></li>
+          <li><a ui-sref="index.contact" class="header__nav__sections__link">КОНТАКТЫ</a></li>
+        </ul>
+      </nav>
+  </header>
+
+  <div class="order" ng-click="ctrl.showForm()"><a href="" class="order__link">Заказать просчет</a></div>
+
+  
+  <div ui-view> </div>
+  <div ng-show="ctrl.tumblerform">!!!!!!!!!!!!!!!!!!!!</div>
+
+  <footer>
+  
+      <ul class="footer__social nav">
+        <li><a href="" class="footer__social__facebook"></a></li>
+        <li><a href="" class="footer__social__photo"></a></li>
+      </ul>
+
+      <ul class="footer__nav nav">
+        <li><a ui-sref="index.about-us" class="footer__nav__link">О НАС</a></li>
+        <li><a href="" class="index.footer__nav__link">УСЛУГИ</a></li>
+        <li><a ui-sref="index.our-works" class="footer__nav__link">НАШИ РАБОТЫ</a></li>
+        <li><a ui-sref="index.news" class="footer__nav__link">НОВОСТИ</a></li>
+        <li><a ui-sref="index.feedback" class="footer__nav__link">ОТЗЫВЫ</a></li>
+        <li><a ui-sref="index.contact" class="footer__nav__link">КОНТАКТЫ</a></li>
+      </ul>
+  </footer>
