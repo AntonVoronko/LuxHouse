@@ -61,8 +61,8 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controllerAs: 'ctrl'
     })
     .state('index.new-full', {
-      url: '/new-full',
-      templateUrl: 'our-works/new-full.html',
+      url: '/new',
+      templateUrl: 'new/new-full.html',
       controller: ourWorksController,
       controllerAs: 'ctrl'
     })

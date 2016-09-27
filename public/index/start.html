@@ -9,10 +9,10 @@
         <ul class="header__nav__sections nav">
           <li><a ui-sref="index.about-us" class="header__nav__sections__link">О НАС</a></li>
           <li><a href="" class="header__nav__sections__link" ng-click="ctrl.showNav()">УСЛУГИ <span class="header__nav__sections_arrow"></span></a>
-          <ul ng-show="ctrl.tumblerNav">
-            <li><a href="">11111</a></li>
-            <li><a href="">11111</a></li>
-            <li><a href="">11111</a></li>
+          <ul ng-show="ctrl.tumblerNav" class="nav">
+            <li class="header__nav__section__link_submenu"><a href="" >Дизайн</a></li>
+            <li class="header__nav__section__link_submenu"><a href="" >Ремонт</a></li>
+            <li class="header__nav__section__link_submenu"><a href="" >Строительство</a></li>
           </ul>
           </li>
           <li><a ui-sref="index.our-works" class="header__nav__sections__link">НАШИ РАБOТЫ</a></li>
@@ -24,10 +24,22 @@
   </header>
 
   <div class="order" ng-click="ctrl.showForm()"><a href="" class="order__link">Заказать просчет</a></div>
-
+   <div ng-show="ctrl.tumblerform" class="order__page">
+      <div class="order__background" ng-click="ctrl.hideForm()"></div>
+      <div class="order__form">
+        <h3 class="order__form__name">Заполните форму</h3>
+        <p class="order__form__message">Наш менеджер свяжется с Вами в ближайшее время</p>
+        <form action="">
+          <div><input type="text" placeholder="Введите Ваше имя" class="order__form__input"></div>
+          <div><input type="email" placeholder="Введите Ваш e-mail" class="order__form__input"></div>
+          <div><input type="tel" pattern="0[0-9]{9}" placeholder="Введите Ваш телефон (0xxxxxxxxx)" class="order__form__input"></div>
+          <div><input type="submit" value="Заказать просчет" class="order__form__submit"></div>
+        </form>
+      </div>
+    </div>
   
   <div ui-view> </div>
-  <div ng-show="ctrl.tumblerform">!!!!!!!!!!!!!!!!!!!!</div>
+ 
 
   <footer>
   
