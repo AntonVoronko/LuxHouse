@@ -9,11 +9,16 @@ var aboutUsController = require('./about-us/js/aboutUsController');
 var contactController = require('./contact/js/contactController');
 var newController = require('./new/js/newController');
 var feedbackController = require('./feedback/js/feedbackController');
-
 var ourWorksController = require('./our-works/js/ourWorksController');
 var galleryController = require('./gallery/js/galleryController');
+var serviceBuildingController = require('./services/js/serviceBuildingController'); 
+var serviceRepairController = require('./services/js/serviceRepairController'); 
+var serviceDesignController = require('./services/js/serviceDesignController'); 
 
-var app = angular.module('app', ['ui.router', 'ngResource'])
+var ngSticky = require('./directives/ngSticky');
+
+
+var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/public/main");
@@ -24,7 +29,6 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: indexController,
       controllerAs: 'ctrl'
     })
-
     .state('index.main', {
       url: '/main',
       templateUrl: 'main/main.html',
@@ -67,36 +71,24 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
       controller: ourWorksController,
       controllerAs: 'ctrl'
     })
-    // .state('gallery', {
-    //   url: '/gallery',
-    //   templateUrl: 'gallery/gallery.html',
-    //   controller: galleryController,
-    //   controllerAs: 'ctrl'
-    // })
-  //   .directive('ngSticky', function($window) {
-  //   return function($scope, element) {
-  //     var  start,
-  //          $win = element($window);
-
-  //     $win.on('scroll', function() {
-
-  //       var scroll = $win.scrollTop();
-
-  //       start = start || element.offset().top;
-
-  //       if (scroll > start) {
-  //         element.addClass('stuck');
-  //       } else {
-  //         element.removeClass('stuck');
-  //       }
-  //     });
-
-  //     $win.on('resize', function recheckPositions() {
-  //       element.width( element.parent().width() );
-  //     });
-
-  //   };
-  // });
+    .state('index.service-building', {
+      url: '/service-building',
+      templateUrl: 'services/service-building.html',
+      controller: serviceBuildingController,
+      controllerAs: 'ctrl'
+    })
+    .state('index.service-repair', {
+      url: '/service-repair',
+      templateUrl: 'services/service-repair.html',
+      controller: serviceRepairController,
+      controllerAs: 'ctrl'
+    })
+    .state('index.service-design', {
+      url: '/service-design',
+      templateUrl: 'services/service-design.html',
+      controller: serviceDesignController,
+      controllerAs: 'ctrl'
+    })
   //css для этой директивы
 //   .stuck {
 //   position: fixed;
@@ -106,6 +98,7 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
   //     $locationProvider.html5Mode(true);
   //   }
 })
+
 .controller('indexController', [indexController])
 .controller('mainController', [mainController])
 .controller('aboutUsController', [aboutUsController])
@@ -113,8 +106,12 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
 .controller('newController', [newController])
 .controller('feedbackController', [feedbackController])
 .controller('ourWorksController', [ourWorksController])
-.controller('galleryController', [galleryController]);
-},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":3,"./feedback/js/feedbackController":4,"./gallery/js/galleryController":5,"./index/js/indexController":6,"./main/js/mainController":7,"./new/js/newController":8,"./our-works/js/ourWorksController":9,"angular":14,"angular-resource":11,"angular-ui-router":12}],2:[function(require,module,exports){
+.controller('galleryController', [galleryController])
+.controller('serviceBuildingController', [serviceBuildingController])
+.controller('serviceRepairController', [serviceRepairController])
+.controller('serviceDesignController', [serviceDesignController]);
+
+},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":3,"./directives/ngSticky":4,"./feedback/js/feedbackController":5,"./gallery/js/galleryController":6,"./index/js/indexController":7,"./main/js/mainController":8,"./new/js/newController":9,"./our-works/js/ourWorksController":10,"./services/js/serviceBuildingController":11,"./services/js/serviceDesignController":12,"./services/js/serviceRepairController":13,"angular":18,"angular-resource":15,"angular-ui-router":16}],2:[function(require,module,exports){
 module.exports = aboutUsController;
 
 function aboutUsController () {
@@ -129,20 +126,41 @@ function contactController () {
 };
 contactController.$inject = [];
 },{}],4:[function(require,module,exports){
+angular.module('ngSticky',[])
+  .directive('ngSticky', function($window) {
+    return function($scope, element) {
+      var  start,
+           $win = element($window);
+
+      $win.on('scroll', function() {
+
+        var scroll = $win.scrollTop();
+
+        start = start || element.offset().top;
+
+        if (scroll > start) {
+          element.addClass('stuck');
+        } else {
+          element.removeClass('stuck');
+        }
+      });
+    };
+  });
+},{}],5:[function(require,module,exports){
 module.exports = feedbackController;
 
 function feedbackController () {
 
 };
 feedbackController.$inject = [];
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = galleryController;
 
 function galleryController() {
 
 };
 galleryController.$inject = [];
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = indexController;
 
 function indexController () {
@@ -160,28 +178,49 @@ function indexController () {
 	}
 };
 indexController.$inject = [];
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = mainController;
 
 function mainController () {
 	
 };
 mainController.$inject = [];
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = newController;
 
 function newController () {
 
 };
 newController.$inject = [];
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = usWorksController;
 
 function usWorksController () {
 
 };
 usWorksController.$inject = [];
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+module.exports = serviceBuildingController;
+
+function serviceBuildingController() {
+
+};
+serviceBuildingController.$inject = [];
+},{}],12:[function(require,module,exports){
+module.exports = serviceDesignController;
+
+function serviceDesignController() {
+
+};
+serviceDesignController.$inject = [];
+},{}],13:[function(require,module,exports){
+module.exports = serviceRepairController;
+
+function serviceRepairController() {
+
+};
+serviceRepairController.$inject = [];
+},{}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1046,11 +1085,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":10}],12:[function(require,module,exports){
+},{"./angular-resource":14}],16:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -5627,7 +5666,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],13:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -37396,8 +37435,8 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],14:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":13}]},{},[1]);
+},{"./angular":17}]},{},[1]);

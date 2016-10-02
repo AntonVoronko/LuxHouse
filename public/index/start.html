@@ -1,4 +1,4 @@
-<header>    
+<header> 
         <a ui-sref="index.main"><img src="../public/img/logo.jpg" alt="Логотип" class="logo"></a>
         <nav class="header__nav">
         <ul class="header__nav__languages nav">
@@ -10,9 +10,9 @@
           <li><a ui-sref="index.about-us" class="header__nav__sections__link">О НАС</a></li>
           <li><a href="" class="header__nav__sections__link" ng-click="ctrl.showNav()">УСЛУГИ <span class="header__nav__sections_arrow"></span></a>
           <ul ng-show="ctrl.tumblerNav" class="nav">
-            <li class="header__nav__section__link_submenu"><a href="" >Дизайн</a></li>
-            <li class="header__nav__section__link_submenu"><a href="" >Ремонт</a></li>
-            <li class="header__nav__section__link_submenu"><a href="" >Строительство</a></li>
+            <li class="header__nav__section__link_submenu"><a ui-sref="index.service-design" >Дизайн</a></li>
+            <li class="header__nav__section__link_submenu"><a ui-sref="index.service-repair" >Ремонт</a></li>
+            <li class="header__nav__section__link_submenu"><a ui-sref="index.service-building" >Строительство</a></li>
           </ul>
           </li>
           <li><a ui-sref="index.our-works" class="header__nav__sections__link">НАШИ РАБOТЫ</a></li>
