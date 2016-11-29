@@ -16,7 +16,6 @@ var serviceDesignController = require('./services/js/serviceDesignController');
 
 var ngSticky = require('./directives/ngSticky');
 
-
 var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -93,6 +92,7 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
 //   position: fixed;
 //   top: 0;
 // }
+
   // if(window.history && window.history.pushState){
   //     $locationProvider.html5Mode(true);
   //   }

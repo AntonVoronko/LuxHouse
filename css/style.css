@@ -75,7 +75,7 @@ header .nav {
 
 .header__nav__sections_arrow {
   display: inline-block;
-  background:  url(../public/img/arrow.jpg) no-repeat;
+  background:  url(../img/arrow.jpg) no-repeat;
   width: 16px;
   height: 16px;
 }
@@ -186,7 +186,7 @@ header .nav {
 .main__cover {
   height: 100vh;
   width: 100vw;
-  background: url('../public/img/main-backg.jpg') 0 -113px no-repeat;
+  background: url('../img/main-backg.jpg') 0 -113px no-repeat;
   background-size: cover;
 }
 .main__motto {
@@ -275,7 +275,7 @@ header .nav {
 
 .cover {
   height: 150px;
-  background: url('../public/img/main-backg.jpg') 0 -465px no-repeat;
+  background: url('../img/main-backg.jpg') 0 -465px no-repeat;
   background-size: cover;
 
 }
@@ -407,7 +407,7 @@ header .nav {
   height: 113px;
   float: left;
   margin-right: 10px;
-  background: url(../public/img/faces.jpg) no-repeat;
+  background: url(../img/faces.jpg) no-repeat;
 }
 .feedback__description__img_girl {
   width: 113px;
@@ -445,7 +445,7 @@ header .nav {
 .contact__description__city__phone__img {
   width: 58px;
   height: 30px;
-  background: url(../public/img/phone.jpg) 0 -5px no-repeat;
+  background: url(../img/phone.jpg) 0 -5px no-repeat;
 }
 .contact__description__city__mail {
   display: inline-block;
@@ -454,7 +454,7 @@ header .nav {
 .contact__description__city__mail__img {
   width: 58px;
   height: 30px;
-  background: url(../public/img/phone.jpg) 0 -53px no-repeat;
+  background: url(../img/phone.jpg) 0 -53px no-repeat;
 }
 .contact__description__city__time {
 
@@ -491,11 +491,11 @@ footer {
   font-size: 25px;
 }
 .footer__social__facebook {
-  background: url('../public/img/facebook-logo-button.png') no-repeat;
+  background: url('../img/facebook-logo-button.png') no-repeat;
   margin-right: 48px;
 }
 .footer__social__photo {
-  background: url('../public/img/instagram-logo.png') no-repeat;
+  background: url('../img/instagram-logo.png') no-repeat;
 }
 .footer__social__facebook:link, 
 .footer__social__facebook:visited,
