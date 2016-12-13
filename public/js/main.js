@@ -90,11 +90,6 @@ var app = angular.module('app', ['ui.router', 'ngResource'])
   //         element.removeClass('stuck');
   //       }
   //     });
-
-  //     $win.on('resize', function recheckPositions() {
-  //       element.width( element.parent().width() );
-  //     });
-
   //   };
   // });
   //css для этой директивы

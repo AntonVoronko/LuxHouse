@@ -1,3 +1,8 @@
+.nav>li>a:hover,
+.nav>li>a:focus {
+    color: white;
+    background-color: #876c29;
+}
 .row {
   margin-left: 0;
   margin-right: 0;
@@ -48,6 +53,8 @@ header .nav {
   font-size: 22px;
   font-weight: 500;
   padding: 15px;
+  text-transform: uppercase;
+
 }
 .header__nav__section__link_submenu{
   text-transform: uppercase;
@@ -79,6 +86,7 @@ header .nav {
   width: 16px;
   height: 16px;
 }
+
 @media (max-width: 1155px) {
   .header__nav__sections__link {
     font-size: 20px;
@@ -303,13 +311,13 @@ header .nav {
   width: 290px;
 }
 .news__title{
-    width: 215px;
+  width: 215px;
 }
 .feedback__title{
-    width: 200px;
+  width: 200px;
 }
 .contact__title{
-      width: 225px;
+  width: 225px;
 }
 .back{
   margin-left: 0px;
@@ -523,4 +531,274 @@ main {
 }
 .page-new{
   height: 100;
+}
+
+
+
+@media (max-width: 1129px) {
+  .main__description {
+    padding-bottom: 20px;
+  }
+}
+
+
+@media (max-width: 1090px) {
+  .main__motto {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 1070px) {
+  .header__nav__sections__link {
+    font-size: 17px;
+  }
+  .logo{
+    height: 100px;
+    width: 200px;
+  }
+  footer {
+    font-size: 17px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.header__nav.navbar-default {
+  box-shadow: none;
+
+}
+
+#bs-example-navbar-collapse-1.collapse.navbar-collapse {
+  background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 992px) {
+  .navbar-toggle.collapsed {
+    display: block;
+    border: none;
+    background-color: white;
+    top: 0px;
+
+
+  } 
+    .navbar-default .navbar-toggle:hover,
+    .navbar-toggle,
+    .navbar-toggle:focus {
+    background-color: #876c29;
+    border-color: #876c29;
+
+  }
+
+    .navbar-default .navbar-toggle.collapsed:hover {
+      background-color: white;
+
+    }
+
+
+    .navbar-toggle {
+      top: -64px;
+    }
+
+
+
+  #bs-example-navbar-collapse-1.collapse.navbar-collapse {
+  background-color: #876c29;
+  width: 100%;
+  margin-top: 100px;
+  height: 300px!important;
+  }
+
+  .navbar-default .navbar-toggle.collapsed .icon-bar {
+    width: 80px;
+    height: 2px;
+    margin-top: 10px;
+    background-color: #876c29;
+
+  }
+  .navbar-default .navbar-toggle .icon-bar {
+    width: 80px;
+    height: 2px;
+    margin-top: 10px;
+    background-color: white;
+
+  }
+
+
+  .navbar-collapse.collapse {
+    display: none!important;
+  }
+  .navbar-default {
+    float: none!important;
+    margin-top: 20px;
+  }
+  .navbar-default>li {
+    float: none;
+  }
+  .navbar-default>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .navbar-collapse.collapse.in{
+    display:block !important;
+    background-color: #876c29;
+    height: 300px;
+
+  }
+  .main__examples__object__img {
+    height: 100%;
+  }
+  .main__examples__object {
+    margin-bottom: 150px;
+  }
+  .main__examples__nav li {
+    text-align: center;
+    display: block;
+    margin-bottom: -20px;
+  }
+  .main__examples__nav__link_top1 {
+    position: relative;
+    top: 440px;
+    z-index: 9;
+  }
+  .main__examples__nav__link_top2 {
+    position: relative;
+    top: 880px;
+    z-index: 9;
+  }
+  .news__description__title {
+    font-size: 15px;
+    margin-left: 0;
+
+  }
+  .news__description__full_link {
+    font-size: 10px;
+  }
+
+  .header__nav__sections>li {
+    display: list-item;
+    height: 20px;
+    vertical-align: top;
+    margin-top: 10px;
+  }
+
+  .header__nav__sections {
+      margin-top: -40px;
+      margin-left: 30px;
+  }
+
+  .header__nav {
+    text-align: left;
+    float:left;
+  }
+
+  .header__nav__sections__link {
+    color: white;
+    padding: 5px;
+  }
+
+  .header__nav__sections__link:hover {
+    text-decoration: none;
+  }
+
+  .header__nav__section__link_submenu {
+    left:140px;
+    top: -22px;
+  }
+
+  .header__nav__languages {
+    top: 220px;
+    left: 30px;
+    position: relative;
+
+  }
+  .nav>li>a {
+    padding: 1px;
+  }
+  .header__nav__languages__link {
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  header .nav {
+    margin-right: 20px;
+  }
+  .about-us__title, 
+  .our-works__title, 
+  .news__title,
+  .feedback__title,
+  .contact__title {
+    width: 100%;
+    color: white;
+    background-color: #876c29;
+    top: -170px;
+    text-transform: none;
+
+  }
+
+
+.cover {
+  background: url('../public/img/main-backg.jpg') 0 -400px no-repeat;
+
+}
+
+.line {
+  border-bottom: none;
+}
+
+  .order__form {
+  left: 0;
+  right: 0;
+}
+
+.navbar-toggle {
+  display: block;
+
+
+}
+
+
+}
+
+.main__examples__nav>li.main__examples__nav__works {
+  text-align: center;
+  display: inline-block;
+  margin-right: 42px;
 }
