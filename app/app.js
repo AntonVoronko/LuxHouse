@@ -6,7 +6,7 @@ var indexController = require('./index/js/indexController');
 var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
 var contactController = require('./contact/js/contactController');
-var newController = require('./new/js/newController');
+var newsController = require('./new/js/newsController');
 var feedbackController = require('./feedback/js/feedbackController');
 var ourWorksController = require('./our-works/js/ourWorksController');
 var galleryController = require('./gallery/js/galleryController');
@@ -19,6 +19,7 @@ var ngSticky = require('./directives/ngSticky');
 var ngDropdown = require('./directives/ngDropdown');
 
 var feedbackService = require('./feedback/js/feedback_service');
+var newsService = require('./new/js/news_service');
 
 var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
 
@@ -56,13 +57,13 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
     .state('index.news', {
       url: '/news',
       templateUrl: 'new/new.html',
-      controller: newController,
+      controller: newsController,
       controllerAs: 'ctrl'
     })
     .state('index.new', {
       url: '/new/:id',
       templateUrl: 'new/new.html',
-      controller: newController,
+      controller: newsController,
       controllerAs: 'ctrl'
     })
     .state('index.feedback', {
@@ -107,7 +108,7 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 .controller('mainController', [mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
-.controller('newController', [newController])
+.controller('newController', ['newsService', newsController])
 .controller('feedbackController', ['feedbackService', feedbackController])
 .controller('ourWorksController', [ourWorksController])
 .controller('galleryController', [galleryController])
@@ -115,4 +116,5 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
 
-.factory('feedbackService', ['$resource', feedbackService]);
+.factory('feedbackService', ['$resource', feedbackService])
+.factory('newsService', ['$resource', newsService]);
