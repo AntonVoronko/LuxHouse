@@ -45,6 +45,16 @@ gulp.task('css', function () {
     .pipe(connect.reload());
 });
 
+// gulp.task('MAXcss', function () {
+//   gulp.src('bower_components/**/**/**/*.css')
+//     .pipe(plumber())
+//     .pipe(concatCss('mainMAX.css'))
+//     .pipe(minifyCss())
+//     .pipe(rename('mainMAX.min.css'))
+//     .pipe(gulp.dest('public/css'))
+//     .pipe(connect.reload());
+// });
+
 gulp.task('sass', function() {
 	return sass('sass/*.sass')
 		.pipe(gulp.dest('public/css'))

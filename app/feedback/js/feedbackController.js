@@ -1,6 +1,30 @@
 module.exports = feedbackController;
 
-function feedbackController () {
+function feedbackController (feedbackService) {
 
+  var self = this;
+
+  this.getFeedback = function () {
+  	feedbackService.getFeedback().$promise.then(
+  	  function (data) {
+  	  	console.log(data);
+  	  },
+  	  function (error) {
+  	  	console.log(error);
+  	  }
+  	);
+  };
+  this.getFeedback();
+
+  this.addFeedback = function () {
+    feedbackService.addFeedback({
+      id: this.feedbackId,
+      name: this.name,
+      text: this.text,
+      date: new Date()
+    })
+  };
+  
 };
-feedbackController.$inject = [];
+
+feedbackController.$inject = ['feedbackService'];

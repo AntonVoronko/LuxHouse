@@ -16,19 +16,27 @@ var serviceDesignController = require('./services/js/serviceDesignController');
 
 var ngSticky = require('./directives/ngSticky');
 
-var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
+var ngDropdown = require('./directives/ngDropdown');
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
-  $urlRouterProvider.otherwise("/public/main");
+var feedbackService = require('./feedback/js/feedback_service');
+
+var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
+
+.config(
+  function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+   if(window.history && window.history.pushState) {
+      // $locationProvider.html5Mode(true);
+    };
+  $urlRouterProvider.otherwise("/");
   $stateProvider
     .state('index', {
-      url: '/public',
+      abstract: true,
       templateUrl: 'index/start.html',
       controller: indexController,
       controllerAs: 'ctrl'
     })
     .state('index.main', {
-      url: '/main',
+      url: '/',
       templateUrl: 'main/main.html',
       controller: mainController,
       controllerAs: 'ctrl'
@@ -47,6 +55,12 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
     })
     .state('index.news', {
       url: '/news',
+      templateUrl: 'new/new.html',
+      controller: newController,
+      controllerAs: 'ctrl'
+    })
+    .state('index.new', {
+      url: '/new/:id',
       templateUrl: 'new/new.html',
       controller: newController,
       controllerAs: 'ctrl'
@@ -87,15 +101,6 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
       controller: serviceDesignController,
       controllerAs: 'ctrl'
     })
-  //css для этой директивы
-//   .stuck {
-//   position: fixed;
-//   top: 0;
-// }
-
-  // if(window.history && window.history.pushState){
-  //     $locationProvider.html5Mode(true);
-  //   }
 })
 
 .controller('indexController', [indexController])
@@ -103,9 +108,11 @@ var app = angular.module('app', ['ui.router', 'ngResource', 'ngSticky'])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
 .controller('newController', [newController])
-.controller('feedbackController', [feedbackController])
+.controller('feedbackController', ['feedbackService', feedbackController])
 .controller('ourWorksController', [ourWorksController])
 .controller('galleryController', [galleryController])
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
-.controller('serviceDesignController', [serviceDesignController]);
+.controller('serviceDesignController', [serviceDesignController])
+
+.factory('feedbackService', ['$resource', feedbackService]);

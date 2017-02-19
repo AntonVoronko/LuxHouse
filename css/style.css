@@ -7,6 +7,7 @@
   margin-left: 0;
   margin-right: 0;
 }
+
 header {
   height: 130px;
   position: absolute;
@@ -775,7 +776,7 @@ main {
 
 
 .cover {
-  background: url('../public/img/main-backg.jpg') 0 -400px no-repeat;
+  background: url('../img/main-backg.jpg') 0 -400px no-repeat;
 
 }
 
@@ -801,4 +802,8 @@ main {
   text-align: center;
   display: inline-block;
   margin-right: 42px;
+}
+.stuck {
+  position: fixed !important;
+  top: 0 !important;
 }
