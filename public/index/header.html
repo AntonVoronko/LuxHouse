@@ -1,0 +1,73 @@
+<header ng-sticky>    
+  <a ui-sref="index.main">
+    <img src="img/logo.jpg"
+    alt="Логотип"
+    class="logo">
+  </a>
+  <nav class="header__nav navbar-default">
+    <button type="button"
+    class="navbar-toggle collapsed"
+    data-toggle="collapse"
+    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">        
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class="collapse navbar-collapse"
+    id="bs-example-navbar-collapse-1"
+    aria-expanded="false">
+      <ul class="header__nav__languages nav">
+        <li>
+          <a href=""
+          class="header__nav__languages__link">УКР</a>
+        </li>
+        <li>
+          <a href=""
+          class="header__nav__languages__link">РУС</a>
+        </li>
+        <li>
+          <a href=""
+          class="header__nav__languages__link">ENG</a>
+        </li>
+      </ul>
+      <ul class="header__nav__sections nav">
+        <li>
+          <a ui-sref="index.about-us"
+          class="header__nav__sections__link">О нас</a>
+        </li>
+        <li>
+          <a href=""
+          class="header__nav__sections__link"
+          ng-dropdown>Услуги<span class="header__nav__sections_arrow"></span></a>
+          <ul class="nav absolute dropdown_menu" ng-dropdown>
+            <li class="header__nav__section__link_submenu">
+              <a href="" >Дизайн</a>
+            </li>
+            <li class="header__nav__section__link_submenu">
+              <a href="" >Ремонт</a>
+            </li>
+            <li class="header__nav__section__link_submenu">
+              <a href="" >Строительство</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a ui-sref="index.our-works"
+          class="header__nav__sections__link">Наши работы</a>
+        </li>
+        <li>
+          <a ui-sref="index.news"
+          class="header__nav__sections__link">Новости</a>
+        </li>
+        <li>
+          <a ui-sref="index.feedback"
+          class="header__nav__sections__link">Отзывы</a>
+        </li>
+        <li>
+          <a ui-sref="index.contact"
+          class="header__nav__sections__link">Контакты</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

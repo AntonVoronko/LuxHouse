@@ -12,7 +12,7 @@ var connection = mysql.createConnection(
 
 module.exports = {
   getFeedbacks: function (callback) {
-	connection.query('SELECT * FROM feedback;', function (err, rows, fields) {
+	connection.query('SELECT * FROM feedback;', function (err, rows) {
 	  if (!err) {
 	    callback(null, rows);
 	  }
