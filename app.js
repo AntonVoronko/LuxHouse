@@ -26,14 +26,51 @@ app.get('/', function (req, res) {
 // };  
 
 // test();
+
+app.route('/api/news')
+  .get(function (req, res) {
+    var news = require('./controllers/newsController');
+    var result = news.getNews(function (err, result) {
+      res.json(result);
+    });
+  })
+  .post(function (req, res) {
+    var news = require('./controllers/newsController');
+    var result = news.addNews(req.query, function (err, result) {
+      res.json(result);
+    });
+  });
+
+app.route('/api/news/:id')
+  .get(function (req, res) {
+    var news = require('./controllers/newsController');
+    var result = news.getSingleNews(req.params.id, function (err, result) {
+      res.json(result);
+    });
+  })
+  .put(function (req, res) {
+    var news = require('./controllers/newsController');
+    var result = news.updateNews(req.params.id, req.query, function (err, result) {
+      res.json(result);
+    });
+  })
+  .delete(function (req, res) {
+//     console.log(req);
+    var news = require('./controllers/newsController');
+    var result = news.deleteNews(req.params.id, function (err, result) {
+      res.json(result);
+    })
+  });
+
+
 app.route('/api/feedbacks')
-  .get(function (req, res, next) {
+  .get(function (req, res) {
     var feedbacks = require('./controllers/feedbackController');
     var result = feedbacks.getFeedbacks(function (err, result) {
       res.json(result);
     });
   })
-  .post(function (req, res, next) {
+  .post(function (req, res) {
     var feedbacks = require('./controllers/feedbackController');
     var result = feedbacks.addFeedback(req.query, function (err, result) {
       res.json(result);
@@ -41,13 +78,13 @@ app.route('/api/feedbacks')
   });
 
 app.route('/api/feedback/:id')
-  .put(function (req, res, next) {
+  .put(function (req, res) {
     var feedbacks = require('./controllers/feedbackController');
-    var result = feedbacks.updateFeedback(req.params.id, function (err, result) {
+    var result = feedbacks.updateFeedback(req.params.id, req.query, function (err, result) {
       res.json(result);
     });
   })
-  .delete(function (req, res, next) {
+  .delete(function (req, res) {
 //     console.log(req);
     var feedbacks = require('./controllers/feedbackController');
     var result = feedbacks.deleteFeedback(req.params.id, function (err, result) {
