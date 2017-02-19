@@ -16,16 +16,16 @@ app.get('/', function (req, res) {
   });
 });
 
-var test = function () {
-  var feedback = require('./controllers/feedbackController');
-  var result = feedback.updateFeedback(3,
-    { name: 'Vita', text: 'Hello' },
-    function (err, result) {
+// var test = function () {
+//   var feedback = require('./controllers/feedbackController');
+//   var result = feedback.updateFeedback(3,
+//     { name: 'Vita', text: 'Hello' },
+//     function (err, result) {
       
-  });
-};  
+//   });
+// };  
 
-test();
+// test();
 app.route('/api/feedbacks')
   .get(function (req, res, next) {
     var feedbacks = require('./controllers/feedbackController');
@@ -34,29 +34,25 @@ app.route('/api/feedbacks')
     });
   })
   .post(function (req, res, next) {
-    // console.log(req.query);
     var feedbacks = require('./controllers/feedbackController');
     var result = feedbacks.addFeedback(req.query, function (err, result) {
       res.json(result);
     });
   });
 
-app.route('/api/feedback/:feedback')
+app.route('/api/feedback/:id')
   .put(function (req, res, next) {
-    console.log(req);
     var feedbacks = require('./controllers/feedbackController');
-    var result = feedbacks.updateFeedback(function (err, result) {
+    var result = feedbacks.updateFeedback(req.params.id, function (err, result) {
       res.json(result);
     });
   })
   .delete(function (req, res, next) {
-    console.log(req);
+//     console.log(req);
     var feedbacks = require('./controllers/feedbackController');
-    var result = feedbacks.deleteFeedback(function (err, result) {
+    var result = feedbacks.deleteFeedback(req.params.id, function (err, result) {
       res.json(result);
-  })
-
-  
-
+    })
+  });
 
 app.listen(3000);
