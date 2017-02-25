@@ -31,6 +31,7 @@ app.route('/api/news')
   .get(function (req, res) {
     var news = require('./controllers/newsController');
     var result = news.getNews(function (err, result) {
+      console.log(result);
       res.json(result);
     });
   })

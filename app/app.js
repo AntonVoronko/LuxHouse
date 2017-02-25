@@ -7,6 +7,7 @@ var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
 var contactController = require('./contact/js/contactController');
 var newsController = require('./new/js/newsController');
+var newsIdController = require('./new/js/newsIdController');
 var feedbackController = require('./feedback/js/feedbackController');
 var ourWorksController = require('./our-works/js/ourWorksController');
 var galleryController = require('./gallery/js/galleryController');
@@ -60,10 +61,10 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
       controller: newsController,
       controllerAs: 'ctrl'
     })
-    .state('index.new', {
-      url: '/new/:id',
-      templateUrl: 'new/new.html',
-      controller: newsController,
+    .state('index.newFull', {
+      url: '/news/:id',
+      templateUrl: 'new/new-full.html',
+      controller: newsIdController,
       controllerAs: 'ctrl'
     })
     .state('index.feedback', {
@@ -75,12 +76,6 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
     .state('index.our-works', {
       url: '/our-works',
       templateUrl: 'our-works/our-works.html',
-      controller: ourWorksController,
-      controllerAs: 'ctrl'
-    })
-    .state('index.new-full', {
-      url: '/new',
-      templateUrl: 'new/new-full.html',
       controller: ourWorksController,
       controllerAs: 'ctrl'
     })
@@ -108,7 +103,8 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 .controller('mainController', [mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
-.controller('newController', ['newsService', newsController])
+.controller('newsController', ['newsService', newsController])
+.controller('newsIdController', ['newsService', newsIdController])
 .controller('feedbackController', ['feedbackService', feedbackController])
 .controller('ourWorksController', [ourWorksController])
 .controller('galleryController', [galleryController])

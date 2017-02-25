@@ -4,7 +4,7 @@ var connection = mysql.createConnection(
   {
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'vavava1',
     database: 'lux_house',
     port: 3306
   }
@@ -14,7 +14,7 @@ module.exports = {
   getNews: function (callback) {
 	connection.query('SELECT * FROM news;', function (err, rows, fields) {
 	  if (!err) {
-	    callback(null, rows);
+	    callback(null, { news: rows });
 	  }
 	  else {
 	  	console.log('error');
@@ -25,7 +25,9 @@ module.exports = {
   getSingleNews: function (id, callback) {
 	connection.query('SELECT * FROM news WHERE id = ' + id + ';', function (err, rows, fields) {
 	  if (!err) {
-	    callback(null, rows);
+	    callback(null, { news: rows[0] });
+	  	console.log(rows[0]);
+
 	  }
 	  else {
 	  	console.log('error');
@@ -35,7 +37,7 @@ module.exports = {
   },
   addNews: function (news, callback) {
 	connection.query('INSERT INTO news(img, title, text, date)' +
-		'VALUES (' news.img ', ' + news.title + ', ' + news.text + ', ' + news.date + '));', function (err, rows, fields) {
+		'VALUES (' + news.img + ', ' + news.title + ', ' + news.text + ', ' + news.date + ');', function (err, rows) {
 	  if (!err) {
 	  	console.log('rows');
 	  	console.log(rows);
