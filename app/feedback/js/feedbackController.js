@@ -7,6 +7,7 @@ function feedbackController (feedbackService) {
   this.getFeedback = function () {
   	feedbackService.getFeedback().$promise.then(
   	  function (data) {
+        self.feedbacks = data.feedback;
   	  	console.log(data);
   	  },
   	  function (error) {
@@ -14,6 +15,7 @@ function feedbackController (feedbackService) {
   	  }
   	);
   };
+  
   this.getFeedback();
 
   this.addFeedback = function () {

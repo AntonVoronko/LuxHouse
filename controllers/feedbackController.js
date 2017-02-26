@@ -1,10 +1,9 @@
 var mysql = require('mysql');
 
-var connection = mysql.createConnection(
-  {
+var connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'vavava1',
     database: 'lux_house',
     port: 3306
   }
@@ -14,7 +13,7 @@ module.exports = {
   getFeedbacks: function (callback) {
 	connection.query('SELECT * FROM feedback;', function (err, rows) {
 	  if (!err) {
-	    callback(null, rows);
+	    callback(null, { feedback: rows });
 	  }
 	  else {
 	  	console.log('error');
@@ -28,7 +27,7 @@ module.exports = {
 	  if (!err) {
 	  	console.log('rows');
 	  	console.log(rows);
-	    callback(null, feedback);
+	    callback(null, { feedback: rows });
 	  }
 	  else {
 	    console.log(err);

@@ -16,17 +16,6 @@ app.get('/', function (req, res) {
   });
 });
 
-// var test = function () {
-//   var feedback = require('./controllers/feedbackController');
-//   var result = feedback.updateFeedback(3,
-//     { name: 'Vita', text: 'Hello' },
-//     function (err, result) {
-      
-//   });
-// };  
-
-// test();
-
 app.route('/api/news')
   .get(function (req, res) {
     var news = require('./controllers/newsController');
@@ -56,7 +45,6 @@ app.route('/api/news/:id')
     });
   })
   .delete(function (req, res) {
-//     console.log(req);
     var news = require('./controllers/newsController');
     var result = news.deleteNews(req.params.id, function (err, result) {
       res.json(result);
@@ -86,9 +74,36 @@ app.route('/api/feedback/:id')
     });
   })
   .delete(function (req, res) {
-//     console.log(req);
     var feedbacks = require('./controllers/feedbackController');
     var result = feedbacks.deleteFeedback(req.params.id, function (err, result) {
+      res.json(result);
+    })
+  });
+
+app.route('/api/works')
+  .get(function (req, res) {
+    var works = require('./controllers/worksController');
+    var result = works.getWorks(function (err, result) {
+      res.json(result);
+    });
+  })
+  .post(function (req, res) {
+    var works = require('./controllers/worksController');
+    var result = works.addWorks(req.query, function (err, result) {
+      res.json(result);
+    });
+  });
+
+app.route('/api/works/:id')
+  .put(function (req, res) {
+    var works = require('./controllers/worksController');
+    var result = works.updateWorks(req.params.id, req.quer, function (err, result) {
+      res.json(result);
+    });
+  })
+  .delete(function (req, res) {
+    var works = require('./controllers/worksController');
+    var result = works.deleteWorks(req.params.id, function (err, result) {
       res.json(result);
     })
   });

@@ -169,6 +169,7 @@ function feedbackController (feedbackService) {
   this.getFeedback = function () {
   	feedbackService.getFeedback().$promise.then(
   	  function (data) {
+        self.feedbacks = data.feedback;
   	  	console.log(data);
   	  },
   	  function (error) {
@@ -176,6 +177,7 @@ function feedbackController (feedbackService) {
   	  }
   	);
   };
+  
   this.getFeedback();
 
   this.addFeedback = function () {
@@ -227,16 +229,12 @@ function feedbackService ($resource) {
         text: '@text',
         date: '@date'
       }
-    },
-    getFeedb: {
-      metod: 'GET',
-      params: {}
     }
   });
 
 
   this.getFeedback = function () {
-  	return resource2.getFeedb();
+  	return resource2.get();
   };
 
   this.addFeedback = function (feedback) {
@@ -305,7 +303,6 @@ function newsController (newsService) {
   	newsService.getNews().$promise.then(
   	  function (data) {
         self.news = data.news;
-  	  	console.log(data);
   	  },
   	  function (error) {
   	  	console.log(error);

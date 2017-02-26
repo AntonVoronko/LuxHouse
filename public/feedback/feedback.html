@@ -7,34 +7,18 @@
       <li><a href="" class="back__current"> / Отзывы</a></li>
     </ul>
 	
-	<div class="feedback__description__around"><div class="feedback__description">
-		<div class="feedback__description__img_boy"></div>
-		<h3 class="feedback__description__title">12.23.2016</h3>
-		<p class="feedback__description__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	</div>
+	<div class="feedback__description__around">
+		<div class="feedback__description" ng-repeat="feedback in ctrl.feedbacks">
+			<div class="feedback__description__img_boy"></div>
+			<h3 class="feedback__description__title" ng-bind="feedback.date"></h3>
+			<p class="feedback__description__content" ng-bind="feedback.text"></p>
+		</div>
 
-	<div class="feedback__description">
-		<div class="feedback__description__img_girl"></div>
-		<h3 class="feedback__description__title">12.23.2016</h3>
-		<p class="feedback__description__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 	</div>
-	
-	<div class="feedback__description">
-		<div class="feedback__description__img_boy"></div>
-		<h3 class="feedback__description__title">12.23.2016</h3>
-		<p class="feedback__description__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	</div>
-
-	<div class="feedback__description">
-		<div class="feedback__description__img_girl"></div>
-		<h3 class="feedback__description__title">12.23.2016</h3>
-		<p class="feedback__description__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	</div>
-	</div>
-	<input type="text" ng-model="ctrl.feedbackId">
+<!-- 	<input type="text" ng-model="ctrl.feedbackId">
 	<input type="text" ng-model="ctrl.name">
 	<textarea name="" id="" cols="30" rows="10" ng-model="ctrl.text"></textarea>
 	<button ng-click="ctrl.addFeedback()">Submite</button>
-
+ -->
 
 </main>
