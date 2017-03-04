@@ -6,6 +6,7 @@ function newsController (newsService) {
   this.getNews = function () {
   	newsService.getNews().$promise.then(
   	  function (data) {
+  	  	self.news = data;
   	  	console.log(data);
   	  },
   	  function (error) {
