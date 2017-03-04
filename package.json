@@ -22,12 +22,13 @@
     "gulp-rename": "~1.2.2",
     "gulp-ruby-sass": "^1.0.1",
     "gulp-webserver": "~0.9.1",
+    "nodemon": "^1.11.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "angular": "^1.6.0",
+    "angular": "^1.6.2",
     "angular-resource": "~1.5.7",
-    "angular-ui-router": "^0.3.1",
+    "angular-ui-router": "^0.4.2",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
