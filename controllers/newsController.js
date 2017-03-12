@@ -1,12 +1,12 @@
 var mysql = require('mysql');
+var config = require('../config');
 
-var connection = mysql.createConnection(
-  {
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'vavava1',
-    database: 'lux_house',
-    port: 3306
+var connection = mysql.createConnection({
+    host: config.host,
+    user: config.mysql_user,
+    password: config.mysql_password,
+    database: config.database,
+    port: config.port
   }
 );
 

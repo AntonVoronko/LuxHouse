@@ -1,3 +1,15 @@
+
+@font-face {
+    font-family: Palabi; /* Гарнитура шрифта */
+    src: url(../font/palabi.ttf); /* Путь к файлу со шрифтом */
+   }
+
+* {
+  font-family: palabi; /* Гарнитура шрифта */
+  font-style: normal; 
+    /*src: url(../font/palabi.ttf); /* Путь к файлу со шрифтом */
+}
+
 .nav>li>a:hover,
 .nav>li>a:focus {
     color: white;
@@ -218,14 +230,23 @@ header .nav {
   padding: 50px 40px 50px 60px;
   height: 560px;
 }
+.owl-carousel.owl-theme .img {
+  height: 260px;
+  background-size: cover
+}
+
+.js-item.xxx {
+  padding:0 20px;
+}
+
 .main__description__text {
-  margin: 40px 50px 0 0;
+  margin: 0px 50px 0 0;
   padding: 46px 46px 0 0;
-  font-size: 16px;
+  font-size: 18px;
   text-align: justify;
 }
 .main__examples{
-  padding-right: 30px;
+  padding: 0 30px 30px 30px;
 }
 .main__examples__title {
   text-align: center;
@@ -234,7 +255,7 @@ header .nav {
   text-transform: uppercase;
   margin: 0 0 10px 50%;
   background: #fff;
-  width: 200px;
+  width: 220px;
   position: relative;
   bottom: 15px;
   right: 100px;

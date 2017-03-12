@@ -1,0 +1,7 @@
+var config = {
+	mysql_password: '',
+	host: '127.0.0.1',
+	mysql_user: 'root'
+};
+
+module.exports = config;
