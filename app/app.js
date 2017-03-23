@@ -1,7 +1,9 @@
 require('angular');
 require('angular-ui-router');
 require('angular-resource');
+require('ng-file-upload');
 
+var imgController = require('./test/js/imgController');
 var indexController = require('./index/js/indexController');
 var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
@@ -11,6 +13,7 @@ var newsIdController = require('./new/js/newsIdController');
 var feedbackController = require('./feedback/js/feedbackController');
 var ourWorksController = require('./our-works/js/ourWorksController');
 var galleryController = require('./gallery/js/galleryController');
+
 var serviceBuildingController = require('./services/js/serviceBuildingController'); 
 var serviceRepairController = require('./services/js/serviceRepairController'); 
 var serviceDesignController = require('./services/js/serviceDesignController'); 
@@ -19,11 +22,12 @@ var ngSticky = require('./directives/ngSticky');
 
 var ngDropdown = require('./directives/ngDropdown');
 
+var imgService = require('./test/js/img_service');
 var feedbackService = require('./feedback/js/feedback_service');
 var newsService = require('./new/js/news_service');
 var worksService = require('./our-works/js/works_service');
 
-var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
+var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
 
 .config(
   function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -98,6 +102,12 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
       controller: serviceDesignController,
       controllerAs: 'ctrl'
     })
+    .state('index.img', {
+      url: '/add-img',
+      templateUrl: 'test/add-img.html',
+      controller: imgController,
+      controllerAs: 'ctrl'
+    })
 })
 
 .controller('indexController', [indexController])
@@ -112,7 +122,9 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
+.controller('imgController', ['imgService', serviceDesignController])
 
+.factory('imgService', ['$resource', imgService])
 .factory('feedbackService', ['$resource', feedbackService])
 .factory('newsService', ['$resource', newsService])
 .factory('worksService', ['$resource', worksService]);
