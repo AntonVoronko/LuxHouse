@@ -11,8 +11,12 @@ var connection = mysql.createConnection({
 );
 
 module.exports = {
-  getFeedbacks: function (callback) {
-  connection.query('SELECT * FROM feedback;', function (err, rows) {
+ getFeedbacks: function (query, callback) {
+  if (query && query.limit && query.offset) {
+    var pagin = 'LIMIT ' + query.limit +' OFFSET ' + query.offset
+  } else {
+    var pagin = '';}
+  connection.query('SELECT * FROM feedback ' + pagin + ';', function (err, rows) {
     if (!err) {
       callback(null, { feedback: rows });
     }

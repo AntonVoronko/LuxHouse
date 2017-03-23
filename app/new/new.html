@@ -6,8 +6,7 @@
       <li><a ui-sref="index.main" class="back__to-main">Главная</a></li>
       <li><a href="" class="back__current"> / Новости</a></li>
     </ul>
-<div class="news__description"
-ng-repeat="news in ctrl.news">
+<div class="news__description" ng-repeat="news in ctrl.news">
 	<img src="img/{{news.img}}" alt="" class="news__description__img hidden-xs hidden-sm">
 	<h3 class="news__description__title">{{news.title}}<span class="news__description__title__date"
 	ng-bind="news.date"></span></h3>

@@ -15,42 +15,29 @@
       <div class="row main__examples">
         <h3 class="main__examples__title">Наши работы</h3>
         <ul class="main__examples__nav">
-          <li><a href="" class="main__examples__nav__link">Дизайн</a></li>
-          <li><a href="" class="main__examples__nav__link main__examples__nav__link_top1">Ремонт</a></li>
-          <li><a href="" class="main__examples__nav__link main__examples__nav__link_top2">Строительство</a></li>
+          <li>
+            <a href="" class="main__examples__nav__link"
+            ng-click="ctrl.getWorks('design')">Дизайн</a>
+          </li>
+          <li>
+            <a href="" class="main__examples__nav__link main__examples__nav__link_top1"
+            ng-click="ctrl.getWorks('serv')">Ремонт</a>
+          </li>
+          <li>
+            <a href="" class="main__examples__nav__link main__examples__nav__link_top2"
+            ng-click="ctrl.getWorks('build')">Строительство</a>
+          </li>
         </ul>
         <div class="owl-carousel owl-theme">
-          <div class="js-item xxx">
-            <div style="background-image: url('img/picture_a.jpeg');"
+          <div class="js-item xxx"
+          ng-repeat="work in ctrl.works">
+            <div style="background-image: url('img/{{work.img}}');"
             class="img"></div>
             <div class="main__examples__object__info">
-             <p class="main__examples__object__info__adress">Адрес:</p>
-              <p class="main__examples__object__info__area">площадь:</p>
-            </div>
-          </div>
-          <div class="js-item xxx">
-            <div style="background-image: url('img/picture_a.jpeg');"
-            class="img"></div>
-            <div class="main__examples__object__info">
-              <p class="main__examples__object__info__adress">Адрес:</p>
-              <p class="main__examples__object__info__area">площадь:</p>
-            </div>
-          </div>
-
-          <div class="js-item xxx">
-            <div style="background-image: url('img/picture_a.jpeg');"
-            class="img"></div>
-            <div class="main__examples__object__info">
-              <p class="main__examples__object__info__adress">Адрес:</p>
-              <p class="main__examples__object__info__area">площадь:</p>
-            </div>
-          </div>
-          <div class="js-item xxx">
-            <div style="background-image: url('img/picture_a.jpeg');"
-            class="img"></div>
-            <div class="main__examples__object__info">
-              <p class="main__examples__object__info__adress">Адрес:</p>
-              <p class="main__examples__object__info__area">площадь:</p>
+              <p class="main__examples__object__info__adress"
+              ng-bind="'Адрес: ' + work.adress"></p>
+              <p class="main__examples__object__info__area"
+              ng-bind="'Площадь: ' + work.area"></p>
             </div>
           </div>
         </div>

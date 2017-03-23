@@ -22,6 +22,7 @@ var ngDropdown = require('./directives/ngDropdown');
 
 var feedbackService = require('./feedback/js/feedback_service');
 var newsService = require('./new/js/news_service');
+var worksService = require('./our-works/js/works_service');
 
 var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
 
@@ -101,21 +102,22 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 })
 
 .controller('indexController', [indexController])
-.controller('mainController', [mainController])
+.controller('mainController', ['worksService', mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
 .controller('newsController', ['newsService', newsController])
 .controller('newsIdController', ['newsService', newsIdController])
 .controller('feedbackController', ['feedbackService', feedbackController])
-.controller('ourWorksController', [ourWorksController])
+.controller('ourWorksController', ['worksService', ourWorksController])
 .controller('galleryController', [galleryController])
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
 
 .factory('feedbackService', ['$resource', feedbackService])
-.factory('newsService', ['$resource', newsService]);
-},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":4,"./directives/ngDropdown":5,"./directives/ngSticky":6,"./feedback/js/feedbackController":7,"./feedback/js/feedback_service":8,"./gallery/js/galleryController":9,"./index/js/indexController":10,"./main/js/mainController":11,"./new/js/newsController":12,"./new/js/newsIdController":13,"./new/js/news_service":14,"./our-works/js/ourWorksController":15,"./services/js/serviceBuildingController":16,"./services/js/serviceDesignController":17,"./services/js/serviceRepairController":18,"angular":23,"angular-resource":20,"angular-ui-router":21}],2:[function(require,module,exports){
+.factory('newsService', ['$resource', newsService])
+.factory('worksService', ['$resource', worksService]);
+},{"./about-us/js/aboutUsController":2,"./contact/js/contactController":4,"./directives/ngDropdown":5,"./directives/ngSticky":6,"./feedback/js/feedbackController":7,"./feedback/js/feedback_service":8,"./gallery/js/galleryController":9,"./index/js/indexController":10,"./main/js/mainController":11,"./new/js/newsController":12,"./new/js/newsIdController":13,"./new/js/news_service":14,"./our-works/js/ourWorksController":15,"./our-works/js/works_service":16,"./services/js/serviceBuildingController":17,"./services/js/serviceDesignController":18,"./services/js/serviceRepairController":19,"angular":24,"angular-resource":21,"angular-ui-router":22}],2:[function(require,module,exports){
 module.exports = aboutUsController;
 
 function aboutUsController () {
@@ -343,22 +345,48 @@ require('../../carousel');
 
 module.exports = mainController;
 
-function mainController () {
+function mainController ($timeout, worksService) {
+	var self = this;
 
-	setTimeout(function () {
-		$('.owl-carousel').owlCarousel({
-			items : 3, //10 items above 1000px browser width
-        	itemsDesktop : [992,2], //5 items between 1000px and 901px
-            itemsDesktopSmall : [992,1], // betweem 900px and 601px
-            itemsTablet: [768,1], //2 items between 600 and 0
-            itemsMobile : false
-        }); // itemsMobile disabled - inherit from itemsTablet option);
-	}, 2000);
+	this.limit = 9;
+	this.offset = 0;
 
+	this.carousel = function () {
+		$timeout(function () {
+			$('.owl-carousel').owlCarousel({
+				items : 3, //10 items above 1000px browser width
+	        	itemsDesktop : [992,2], //5 items between 1000px and 901px
+	            itemsDesktopSmall : [992,1], // betweem 900px and 601px
+	            itemsTablet: [768,1], //2 items between 600 and 0
+	            itemsMobile : false
+	        }); // itemsMobile disabled - inherit from itemsTablet option);
+		}, 500)		
+	};
+
+	this.getWorks = function (worktype) {
+		var options = {
+			type: worktype,
+			limit: this.limit,
+			offset: this.offset
+		};
+		this.showWorks = false;
+		worksService.getWorks(options).$promise.then(
+			function (data) {
+				self.showWorks = true;
+				self.works = data.works;
+				self.carousel();
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+
+	}
+	this.getWorks('design');
 };
 
-mainController.$inject = [];
-},{"../../carousel":3,"jquery":24}],12:[function(require,module,exports){
+mainController.$inject = ['$timeout', 'worksService'];
+},{"../../carousel":3,"jquery":25}],12:[function(require,module,exports){
 module.exports = newsController;
 
 function newsController (newsService) {
@@ -367,7 +395,7 @@ function newsController (newsService) {
   this.getNews = function () {
   	newsService.getNews().$promise.then(
   	  function (data) {
-  	  	self.news = data;
+  	  	self.news = data.news;
   	  	console.log(data);
   	  },
   	  function (error) {
@@ -421,36 +449,99 @@ function newsService ($resource) {
 
 newsService.$inject = ['$resource'];
 },{}],15:[function(require,module,exports){
-module.exports = usWorksController;
+module.exports = ourWorksController;
 
-function usWorksController () {
+function ourWorksController (worksService) {
+	var self = this;
 
+	this.limit = 9;
+	this.offset = 0;
+
+	this.getWorks = function (worktype) {
+		var options = {
+			type: worktype,
+			limit: this.limit,
+			offset: this.offset
+		};
+		worksService.getWorks(options).$promise.then(
+			function (data) {
+				self.works = data.works;
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+	};
+
+	this.getWorks('design');
 };
-usWorksController.$inject = [];
+
+ourWorksController.$inject = ['worksService'];
 },{}],16:[function(require,module,exports){
+module.exports = worksService;
+
+function worksService ($resource) {
+
+  var resource = $resource('/api/works/:work_id');
+  var resource2 = $resource('/api/works');
+
+
+  this.getWorks = function (works) {
+  	return resource2.get({
+  		type: works.type,
+  		limit: works.limit,
+  		offset: works.offset
+  	});
+  };
+
+  this.addWork = function (work) {
+    return resource.addWork({
+      id: work.id,
+      name: work.name,
+      text: work.text,
+      date: work.date
+    });
+  };
+
+  this.updateWork = function (option) {
+  	return resource.update({
+  	  work_id: option.id,
+  	  name: option.name
+  	});
+  };
+
+  this.deleteWork = function (id) {
+  	return resource.delete({ work_id: id });
+  };
+
+  return this;
+};
+
+worksService.$inject = ['$resource'];
+},{}],17:[function(require,module,exports){
 module.exports = serviceBuildingController;
 
 function serviceBuildingController() {
 
 };
 serviceBuildingController.$inject = [];
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = serviceDesignController;
 
 function serviceDesignController() {
 
 };
 serviceDesignController.$inject = [];
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports = serviceRepairController;
 
 function serviceRepairController() {
 
 };
 serviceRepairController.$inject = [];
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
- * @license AngularJS v1.5.10
+ * @license AngularJS v1.5.8
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -615,13 +706,12 @@ function shallowClearAndCopy(src, dst) {
  *     transform function or an array of such functions. The transform function takes the http
  *     request body and headers and returns its transformed (typically serialized) version.
  *     By default, transformRequest will contain one function that checks if the request data is
- *     an object and serializes it using `angular.toJson`. To prevent this behavior, set
+ *     an object and serializes to using `angular.toJson`. To prevent this behavior, set
  *     `transformRequest` to an empty array: `transformRequest: []`
  *   - **`transformResponse`** –
- *     `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
+ *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
  *     transform function or an array of such functions. The transform function takes the http
- *     response body, headers and status and returns its transformed (typically deserialized)
- *     version.
+ *     response body and headers and returns its transformed (typically deserialized) version.
  *     By default, transformResponse will contain one function that checks if the response looks
  *     like a JSON string and deserializes it using `angular.fromJson`. To prevent this behavior,
  *     set `transformResponse` to an empty array: `transformResponse: []`
@@ -695,9 +785,9 @@ function shallowClearAndCopy(src, dst) {
  *   - non-GET instance actions:  `instance.$action([parameters], [success], [error])`
  *
  *
- *   Success callback is called with (value (Object|Array), responseHeaders (Function),
- *   status (number), statusText (string)) arguments, where the value is the populated resource
- *   instance or collection object. The error callback is called with (httpResponse) argument.
+ *   Success callback is called with (value, responseHeaders) arguments, where the value is
+ *   the populated resource instance or collection object. The error callback is called
+ *   with (httpResponse) argument.
  *
  *   Class actions return empty instance (with additional properties below).
  *   Instance actions return promise of the action.
@@ -882,9 +972,8 @@ function shallowClearAndCopy(src, dst) {
  *
  */
 angular.module('ngResource', ['ng']).
-  provider('$resource', function ResourceProvider() {
-    var PROTOCOL_AND_DOMAIN_REGEX = /^https?:\/\/[^/]*/;
-
+  provider('$resource', function() {
+    var PROTOCOL_AND_DOMAIN_REGEX = /^https?:\/\/[^\/]*/;
     var provider = this;
 
     /**
@@ -928,7 +1017,7 @@ angular.module('ngResource', ['ng']).
      * ```js
      *   angular.
      *     module('myApp').
-     *     config(['$resourceProvider', function ($resourceProvider) {
+     *     config(['resourceProvider', function ($resourceProvider) {
      *       $resourceProvider.defaults.actions.update = {
      *         method: 'PUT'
      *       };
@@ -940,9 +1029,9 @@ angular.module('ngResource', ['ng']).
      * ```js
      *   angular.
      *     module('myApp').
-     *     config(['$resourceProvider', function ($resourceProvider) {
+     *     config(['resourceProvider', function ($resourceProvider) {
      *       $resourceProvider.defaults.actions = {
-     *         create: {method: 'POST'},
+     *         create: {method: 'POST'}
      *         get:    {method: 'GET'},
      *         getAll: {method: 'GET', isArray:true},
      *         update: {method: 'PUT'},
@@ -975,10 +1064,7 @@ angular.module('ngResource', ['ng']).
         forEach = angular.forEach,
         extend = angular.extend,
         copy = angular.copy,
-        isArray = angular.isArray,
-        isDefined = angular.isDefined,
-        isFunction = angular.isFunction,
-        isNumber = angular.isNumber;
+        isFunction = angular.isFunction;
 
       /**
        * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
@@ -1036,12 +1122,12 @@ angular.module('ngResource', ['ng']).
           var urlParams = self.urlParams = {};
           forEach(url.split(/\W/), function(param) {
             if (param === 'hasOwnProperty') {
-              throw $resourceMinErr('badname', 'hasOwnProperty is not a valid parameter name.');
+              throw $resourceMinErr('badname', "hasOwnProperty is not a valid parameter name.");
             }
-            if (!(new RegExp('^\\d+$').test(param)) && param &&
-              (new RegExp('(^|[^\\\\]):' + param + '(\\W|$)').test(url))) {
+            if (!(new RegExp("^\\d+$").test(param)) && param &&
+              (new RegExp("(^|[^\\\\]):" + param + "(\\W|$)").test(url))) {
               urlParams[param] = {
-                isQueryParamValue: (new RegExp('\\?.*=:' + param + '(?:\\W|$)')).test(url)
+                isQueryParamValue: (new RegExp("\\?.*=:" + param + "(?:\\W|$)")).test(url)
               };
             }
           });
@@ -1054,19 +1140,19 @@ angular.module('ngResource', ['ng']).
           params = params || {};
           forEach(self.urlParams, function(paramInfo, urlParam) {
             val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
-            if (isDefined(val) && val !== null) {
+            if (angular.isDefined(val) && val !== null) {
               if (paramInfo.isQueryParamValue) {
                 encodedVal = encodeUriQuery(val, true);
               } else {
                 encodedVal = encodeUriSegment(val);
               }
-              url = url.replace(new RegExp(':' + urlParam + '(\\W|$)', 'g'), function(match, p1) {
+              url = url.replace(new RegExp(":" + urlParam + "(\\W|$)", "g"), function(match, p1) {
                 return encodedVal + p1;
               });
             } else {
-              url = url.replace(new RegExp('(/?):' + urlParam + '(\\W|$)', 'g'), function(match,
+              url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W|$)", "g"), function(match,
                   leadingSlashes, tail) {
-                if (tail.charAt(0) === '/') {
+                if (tail.charAt(0) == '/') {
                   return tail;
                 } else {
                   return leadingSlashes + tail;
@@ -1108,7 +1194,7 @@ angular.module('ngResource', ['ng']).
           actionParams = extend({}, paramDefaults, actionParams);
           forEach(actionParams, function(value, key) {
             if (isFunction(value)) { value = value(data); }
-            ids[key] = value && value.charAt && value.charAt(0) === '@' ?
+            ids[key] = value && value.charAt && value.charAt(0) == '@' ?
               lookupDottedPath(data, value.substr(1)) : value;
           });
           return ids;
@@ -1132,10 +1218,11 @@ angular.module('ngResource', ['ng']).
         forEach(actions, function(action, name) {
           var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
           var numericTimeout = action.timeout;
-          var cancellable = isDefined(action.cancellable) ?
-              action.cancellable : route.defaults.cancellable;
+          var cancellable = angular.isDefined(action.cancellable) ? action.cancellable :
+              (options && angular.isDefined(options.cancellable)) ? options.cancellable :
+              provider.defaults.cancellable;
 
-          if (numericTimeout && !isNumber(numericTimeout)) {
+          if (numericTimeout && !angular.isNumber(numericTimeout)) {
             $log.debug('ngResource:\n' +
                        '  Only numeric values are allowed as `timeout`.\n' +
                        '  Promises are not supported in $resource, because the same value would ' +
@@ -1148,11 +1235,12 @@ angular.module('ngResource', ['ng']).
           Resource[name] = function(a1, a2, a3, a4) {
             var params = {}, data, success, error;
 
+            /* jshint -W086 */ /* (purposefully fall through case statements) */
             switch (arguments.length) {
               case 4:
                 error = a4;
                 success = a3;
-                // falls through
+              //fallthrough
               case 3:
               case 2:
                 if (isFunction(a2)) {
@@ -1164,14 +1252,13 @@ angular.module('ngResource', ['ng']).
 
                   success = a2;
                   error = a3;
-                  // falls through
+                  //fallthrough
                 } else {
                   params = a1;
                   data = a2;
                   success = a3;
                   break;
                 }
-                // falls through
               case 1:
                 if (isFunction(a1)) success = a1;
                 else if (hasBody) data = a1;
@@ -1180,9 +1267,10 @@ angular.module('ngResource', ['ng']).
               case 0: break;
               default:
                 throw $resourceMinErr('badargs',
-                  'Expected up to 4 arguments [params, data, success, error], got {0} arguments',
+                  "Expected up to 4 arguments [params, data, success, error], got {0} arguments",
                   arguments.length);
             }
+            /* jshint +W086 */ /* (purposefully fall through case statements) */
 
             var isInstanceCall = this instanceof Resource;
             var value = isInstanceCall ? data : (action.isArray ? [] : new Resource(data));
@@ -1226,16 +1314,18 @@ angular.module('ngResource', ['ng']).
 
               if (data) {
                 // Need to convert action.isArray to boolean in case it is undefined
-                if (isArray(data) !== (!!action.isArray)) {
+                // jshint -W018
+                if (angular.isArray(data) !== (!!action.isArray)) {
                   throw $resourceMinErr('badcfg',
                       'Error in resource configuration for action `{0}`. Expected response to ' +
                       'contain an {1} but got an {2} (Request: {3} {4})', name, action.isArray ? 'array' : 'object',
-                    isArray(data) ? 'array' : 'object', httpConfig.method, httpConfig.url);
+                    angular.isArray(data) ? 'array' : 'object', httpConfig.method, httpConfig.url);
                 }
+                // jshint +W018
                 if (action.isArray) {
                   value.length = 0;
                   forEach(data, function(item) {
-                    if (typeof item === 'object') {
+                    if (typeof item === "object") {
                       value.push(new Resource(item));
                     } else {
                       // Valid JSON values may be string literals, and these should not be converted
@@ -1261,7 +1351,7 @@ angular.module('ngResource', ['ng']).
             promise['finally'](function() {
               value.$resolved = true;
               if (!isInstanceCall && cancellable) {
-                value.$cancelRequest = noop;
+                value.$cancelRequest = angular.noop;
                 $timeout.cancel(numericTimeoutPromise);
                 timeoutDeferred = numericTimeoutPromise = httpConfig.timeout = null;
               }
@@ -1270,7 +1360,7 @@ angular.module('ngResource', ['ng']).
             promise = promise.then(
               function(response) {
                 var value = responseInterceptor(response);
-                (success || noop)(value, response.headers, response.status, response.statusText);
+                (success || noop)(value, response.headers);
                 return value;
               },
               responseErrorInterceptor);
@@ -1301,8 +1391,7 @@ angular.module('ngResource', ['ng']).
         });
 
         Resource.bind = function(additionalParamDefaults) {
-          var extendedParamDefaults = extend({}, paramDefaults, additionalParamDefaults);
-          return resourceFactory(url, extendedParamDefaults, actions, options);
+          return resourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
         };
 
         return Resource;
@@ -1315,11 +1404,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":19}],21:[function(require,module,exports){
+},{"./angular-resource":20}],22:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.4.2
@@ -6004,7 +6093,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * @license AngularJS v1.6.2
  * (c) 2010-2017 Google, Inc. http://angularjs.org
@@ -39139,11 +39228,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":22}],24:[function(require,module,exports){
+},{"./angular":23}],25:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/

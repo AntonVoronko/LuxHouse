@@ -12,8 +12,16 @@ var connection = mysql.createConnection({
 console.log(config);
 
 module.exports = {
-  getWorks: function (callback) {
-	connection.query('SELECT * FROM works;', function (err, rows) {
+  getWorks: function (query, callback) {
+  // if (query && query.limit && query.offset) {
+  //   var pagin = 'LIMIT ' + query.limit +' OFFSET ' + query.offset
+  // } else {
+  //   var pagin = '';}
+  if (query.type) {
+  	var pagin = 'WHERE worktype = "' + query.type + '"';
+  }
+  console.log('SELECT * FROM works ' + pagin + ';');
+  connection.query('SELECT * FROM works ' + pagin + ' LIMIT ' + query.limit +' OFFSET ' + query.offset + ';', function (err, rows) {
 	  if (!err) {
 	    callback(null, { works: rows });
 	  }

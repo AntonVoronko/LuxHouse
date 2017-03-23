@@ -1,6 +1,28 @@
-module.exports = usWorksController;
+module.exports = ourWorksController;
 
-function usWorksController () {
+function ourWorksController (worksService) {
+	var self = this;
 
+	this.limit = 9;
+	this.offset = 0;
+
+	this.getWorks = function (worktype) {
+		var options = {
+			type: worktype,
+			limit: this.limit,
+			offset: this.offset
+		};
+		worksService.getWorks(options).$promise.then(
+			function (data) {
+				self.works = data.works;
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+	};
+
+	this.getWorks('design');
 };
-usWorksController.$inject = [];
+
+ourWorksController.$inject = ['worksService'];

@@ -21,6 +21,7 @@ var ngDropdown = require('./directives/ngDropdown');
 
 var feedbackService = require('./feedback/js/feedback_service');
 var newsService = require('./new/js/news_service');
+var worksService = require('./our-works/js/works_service');
 
 var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
 
@@ -100,17 +101,18 @@ var app = angular.module('app', ['ngDropdown', 'ui.router', 'ngResource', 'ngSti
 })
 
 .controller('indexController', [indexController])
-.controller('mainController', [mainController])
+.controller('mainController', ['worksService', mainController])
 .controller('aboutUsController', [aboutUsController])
 .controller('contactController', [contactController])
 .controller('newsController', ['newsService', newsController])
 .controller('newsIdController', ['newsService', newsIdController])
 .controller('feedbackController', ['feedbackService', feedbackController])
-.controller('ourWorksController', [ourWorksController])
+.controller('ourWorksController', ['worksService', ourWorksController])
 .controller('galleryController', [galleryController])
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
 
 .factory('feedbackService', ['$resource', feedbackService])
-.factory('newsService', ['$resource', newsService]);
+.factory('newsService', ['$resource', newsService])
+.factory('worksService', ['$resource', worksService]);
