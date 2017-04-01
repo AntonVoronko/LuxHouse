@@ -1,15 +1,41 @@
 module.exports = imgController;
 
-function imgController (Upload, imgService) {
-	 var vm = this;
-        vm.submit = function () { //function to call on form submit
-            if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
-                vm.upload(vm.file); //call upload function
+function imgController ($window, Upload, imgService, newsService, feedbackService, worksService) {
+	var vm = this;
+
+    this.showAPi = function (type) {
+        this.catalog = type;
+    };
+
+
+    this.showTab = function (index) {
+        this.newsTabs = index;
+    };
+
+    this.news = {
+        title: '',
+        text: '',
+        date: new Date()
+    };
+
+    vm.submit = function () { //function to call on form submit
+        if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+            vm.upload(vm.file); //call upload function
+        }
+        newsService.addNews(this.news).$promise.then(
+            function(data) {
+                console.log(data);
+            },
+            function(err) {
+                console.log(err);
             }
-        };
+        );
+
+
+    };
         vm.upload = function (file) {
             Upload.upload({
-                url: 'http://localhost:3000/upload', //webAPI exposed to upload the file
+                url: 'http://localhost:3000/api/news', //webAPI exposed to upload the file
                 data:{file:file} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 if(resp.data.error_code === 0){ //validate success
@@ -30,4 +56,4 @@ function imgController (Upload, imgService) {
 };
 
 
-imgController.$inject = ['Upload', 'imgService'];
+imgController.$inject = ['$window', 'Upload', 'imgService', 'newsService', 'feedbackService', 'worksService'];

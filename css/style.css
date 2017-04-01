@@ -203,7 +203,9 @@ header .nav {
   font-weight: bold;
 }
 
-
+main {
+  min-height: 300px;
+}
 .main__cover {
   height: 100vh;
   width: 100vw;
@@ -828,4 +830,76 @@ main {
 .stuck {
   position: fixed !important;
   top: 0 !important;
+}
+
+.admin ul {
+  list-style: none;
+  margin: 0;
+}
+
+.admin .menu-for-catalog li {
+  height: 30px;
+  width: 100%;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  background: grey;
+  margin-bottom: 2px;
+}
+
+.admin .catalog {
+  text-align: center;
+  font-size: 0;
+  padding: 0;
+}
+
+.admin .box-for-content {
+  border: 1px solid grey;
+}
+.admin .catalog .tabs {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+.admin .catalog .tabs li {
+  font-size: 20px;
+  /*vertical-align: middle;*/
+  display: inline-block;
+  /*width: 50%;*/
+  padding: 5px 15px;
+  border: 1px solid grey;
+  border-bottom: 0px;
+  margin: 0;
+  /*height: 30px;*/
+}
+
+.admin .catalog .tabs li:first-child {
+  border-right: 0;
+}
+
+.admin .catalog .label-in-form {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.admin .catalog .box-for-content [type="text"] {
+  font-size: 20px;
+  width: 40%;
+  height: 30px;
+}
+.admin .catalog .box-for-content textarea {
+  font-size: 20px;
+  width: 40%;
+  height: 100px;
+}
+.admin .catalog .box-for-content [type="file"] {
+  font-size: 20px;
+  padding: 10px 25px;
+}
+
+.admin .catalog button {
+  font-size: 20px;
+  padding: 5px 15px;
+  border-radius: 4px;
 }

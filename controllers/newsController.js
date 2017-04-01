@@ -35,9 +35,9 @@ module.exports = {
     }
   })
   },
-  addNews: function (news, callback) {
-  connection.query('INSERT INTO news(img, title, text, date)' +
-    'VALUES (' + news.img + ', ' + news.title + ', ' + news.text + ', ' + news.date + ');', function (err, rows) {
+  addNews: function (news, imgName, callback) {
+  connection.query('INSERT INTO news(img, title, text, date) ' +
+    'VALUES ("' + imgName + '", "' + news.title + '", "' + news.text + '", "' + news.date + '");', function (err, rows) {
     if (!err) {
       console.log('rows');
       console.log(rows);

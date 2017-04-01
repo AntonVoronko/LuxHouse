@@ -14,31 +14,32 @@ var news = require('./controllers/newsController');
 var feedbacks = require('./controllers/feedbackController');
 var works = require('./controllers/worksController');
 var auth = require('./controllers/authorizationController');
-var multer = require('multer');
+var saveImg = require('./controllers/imgController');
+// var multer = require('multer');
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/')
-  },
-  filename: function (req, file, cb) {
-    var datetimestamp = Date.now();
-    cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
-  }
-});
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './uploads/')
+//   },
+//   filename: function (req, file, cb) {
+//     var datetimestamp = Date.now();
+//     cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+//   }
+// });
 
-var upload = multer({
-  storage: storage
-}).single('file');
+// var upload = multer({
+//   storage: storage
+// }).single('file');
 
 app.get('/', function (req, res) {
   res.render('index', function (err, html) {
@@ -46,15 +47,15 @@ app.get('/', function (req, res) {
   });
 });
 
-app.post('/upload', function(req, res) {
-  upload(req,res,function(err){
-    if(err){
-      res.json({error_code:1,err_desc:err});
-      return;
-    }
-    res.json({error_code:0,err_desc:null});
-  })
-});
+// app.post('/upload', function(req, res) {
+//   upload(req,res,function(err){
+//     if (err){
+//       res.json({ error_code: 1, err_desc: err });
+//       return;
+//     }
+//     res.json({error_code:0,err_desc:null});
+//   })
+// });
 
 app.route('/api/news')
   .get(function (req, res) {
@@ -64,8 +65,15 @@ app.route('/api/news')
     });
   })
   .post(function (req, res) {
-    var result = news.addNews(req.query, function (err, result) {
-      res.json(result);
+    saveImg(req, res, function (err, imgName) {
+      if (!err) {
+        console.log(req.query);
+        console.log('req.query');
+        news.addNews(req.query, imgName, function (err, result) {
+          res.json(result);
+        });
+      }
+      else res.json(result);
     });
   });
 
@@ -141,6 +149,11 @@ app.route('/api/works/:id')
       res.json(result);
     });
   });
+
+  app.use(function(req, res, next) {
+  res.status(404).sendFile(__dirname + '/public/index.html');
+
+});
 
 
 app.listen(3000);

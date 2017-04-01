@@ -33,7 +33,7 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
 .config(
   function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
    if(window.history && window.history.pushState) {
-      // $locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
     };
   $urlRouterProvider.otherwise("/");
   $stateProvider
@@ -123,7 +123,7 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
-.controller('imgController', ['imgService', serviceDesignController])
+.controller('imgController', ['imgService', 'newsService', 'feedbackService', 'worksService', serviceDesignController])
 
 .factory('imgService', ['$resource', imgService])
 .factory('feedbackService', ['$resource', feedbackService])
@@ -445,7 +445,20 @@ module.exports = newsService;
 
 function newsService ($resource) {
 
-  var resource = $resource('/api/news');
+  var resource = $resource('/api/news', {}, {
+  	addNews: {
+  		method: 'POST',
+  		params: {
+  			title: '@title',
+  			text: '@text',
+  			date: '@date'
+  		},
+  		headers: {
+  			'Content-Type': 'application/form-data'
+  		}
+  	}
+  });
+
   var resourceId = $resource('/api/news/:news_id', {news_id: '@id'});
 
   this.getNews = function () {
@@ -455,6 +468,14 @@ function newsService ($resource) {
   this.getNewsId = function (id) {
   	return resourceId.get({ news_id: id });
   }
+
+  this.addNews = function (option) {
+  	return resource.addNews({
+  	  title: option.title,
+  	  text: option.text,
+  	  date: option.date
+  	});
+  };
 
   return this;
 };
@@ -554,16 +575,42 @@ serviceRepairController.$inject = [];
 },{}],20:[function(require,module,exports){
 module.exports = imgController;
 
-function imgController (Upload, imgService) {
-	 var vm = this;
-        vm.submit = function () { //function to call on form submit
-            if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
-                vm.upload(vm.file); //call upload function
+function imgController ($window, Upload, imgService, newsService, feedbackService, worksService) {
+	var vm = this;
+
+    this.showAPi = function (type) {
+        this.catalog = type;
+    };
+
+
+    this.showTab = function (index) {
+        this.newsTabs = index;
+    };
+
+    this.news = {
+        title: '',
+        text: '',
+        date: new Date()
+    };
+
+    vm.submit = function () { //function to call on form submit
+        if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+            vm.upload(vm.file); //call upload function
+        }
+        newsService.addNews(this.news).$promise.then(
+            function(data) {
+                console.log(data);
+            },
+            function(err) {
+                console.log(err);
             }
-        };
+        );
+
+
+    };
         vm.upload = function (file) {
             Upload.upload({
-                url: 'http://localhost:3000/upload', //webAPI exposed to upload the file
+                url: 'http://localhost:3000/api/news', //webAPI exposed to upload the file
                 data:{file:file} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 if(resp.data.error_code === 0){ //validate success
@@ -584,11 +631,12 @@ function imgController (Upload, imgService) {
 };
 
 
-imgController.$inject = ['Upload', 'imgService'];
+imgController.$inject = ['$window', 'Upload', 'imgService', 'newsService', 'feedbackService', 'worksService'];
 },{}],21:[function(require,module,exports){
 module.exports = imgService;
 
 function imgService ($resource) {
+	
 	return this;
 };
 

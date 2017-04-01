@@ -32,7 +32,7 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
 .config(
   function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
    if(window.history && window.history.pushState) {
-      // $locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
     };
   $urlRouterProvider.otherwise("/");
   $stateProvider
@@ -122,7 +122,7 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
-.controller('imgController', ['imgService', serviceDesignController])
+.controller('imgController', ['imgService', 'newsService', 'feedbackService', 'worksService', serviceDesignController])
 
 .factory('imgService', ['$resource', imgService])
 .factory('feedbackService', ['$resource', feedbackService])

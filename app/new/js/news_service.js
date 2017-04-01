@@ -2,7 +2,20 @@ module.exports = newsService;
 
 function newsService ($resource) {
 
-  var resource = $resource('/api/news');
+  var resource = $resource('/api/news', {}, {
+  	addNews: {
+  		method: 'POST',
+  		params: {
+  			title: '@title',
+  			text: '@text',
+  			date: '@date'
+  		},
+  		headers: {
+  			'Content-Type': 'application/form-data'
+  		}
+  	}
+  });
+
   var resourceId = $resource('/api/news/:news_id', {news_id: '@id'});
 
   this.getNews = function () {
@@ -12,6 +25,14 @@ function newsService ($resource) {
   this.getNewsId = function (id) {
   	return resourceId.get({ news_id: id });
   }
+
+  this.addNews = function (option) {
+  	return resource.addNews({
+  	  title: option.title,
+  	  text: option.text,
+  	  date: option.date
+  	});
+  };
 
   return this;
 };
