@@ -15,13 +15,15 @@ function imgController ($window, Upload, imgService, newsService, feedbackServic
     this.news = {
         title: '',
         text: '',
-        date: new Date()
+        date: new Date(),
+        file: undefined
     };
 
     vm.submit = function () { //function to call on form submit
-        if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
-            vm.upload(vm.file); //call upload function
-        }
+        // if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+        //     vm.upload(vm.file); //call upload function
+        // }
+        console.log(this.news);
         newsService.addNews(this.news).$promise.then(
             function(data) {
                 console.log(data);
@@ -36,7 +38,12 @@ function imgController ($window, Upload, imgService, newsService, feedbackServic
         vm.upload = function (file) {
             Upload.upload({
                 url: 'http://localhost:3000/api/news', //webAPI exposed to upload the file
-                data:{file:file} //pass file as data, should be user ng-model
+                'Content-type': 'application/form-data',
+                data:{
+                   file:file,
+                   title:this.news.title,
+                   text:this.news.text
+                } //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 if(resp.data.error_code === 0){ //validate success
                     $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');

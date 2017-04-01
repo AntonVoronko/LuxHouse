@@ -8,7 +8,8 @@ function newsService ($resource) {
   		params: {
   			title: '@title',
   			text: '@text',
-  			date: '@date'
+  			date: '@date',
+        file: '@file'
   		},
   		headers: {
   			'Content-Type': 'application/form-data'
@@ -30,7 +31,8 @@ function newsService ($resource) {
   	return resource.addNews({
   	  title: option.title,
   	  text: option.text,
-  	  date: option.date
+  	  date: option.date,
+      file: option.file
   	});
   };
 

@@ -65,16 +65,18 @@ app.route('/api/news')
     });
   })
   .post(function (req, res) {
-    saveImg(req, res, function (err, imgName) {
-      if (!err) {
-        console.log(req.query);
-        console.log('req.query');
-        news.addNews(req.query, imgName, function (err, result) {
-          res.json(result);
-        });
-      }
-      else res.json(result);
-    });
+      saveImg(req, res, function (err, imgName) {
+    console.log ('req.query'); 
+    console.log (req.query); 
+        if (!err) {
+          console.log(imgName);
+          console.log('imgName');
+          news.addNews(req.query, imgName, function (err, result) {
+            res.json(result);
+          });
+        }
+        else res.json(result);
+      });
   });
 
 app.route('/api/news/:id')
