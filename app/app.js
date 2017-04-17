@@ -3,7 +3,10 @@ require('angular-ui-router');
 require('angular-resource');
 require('ng-file-upload');
 
-var imgController = require('./test/js/imgController');
+var adminController = require('./admin/js/adminController');
+var adminWorkController = require('./admin/js/adminWorkController');
+var adminFeedbackController = require('./admin/js/adminFeedbackController');
+var adminNewsController = require('./admin/js/adminNewsController');
 var indexController = require('./index/js/indexController');
 var mainController = require('./main/js/mainController');
 var aboutUsController = require('./about-us/js/aboutUsController');
@@ -13,6 +16,7 @@ var newsIdController = require('./new/js/newsIdController');
 var feedbackController = require('./feedback/js/feedbackController');
 var ourWorksController = require('./our-works/js/ourWorksController');
 var galleryController = require('./gallery/js/galleryController');
+var carouselController = require('./carousel/js/carouselController');
 
 var serviceBuildingController = require('./services/js/serviceBuildingController'); 
 var serviceRepairController = require('./services/js/serviceRepairController'); 
@@ -22,10 +26,11 @@ var ngSticky = require('./directives/ngSticky');
 
 var ngDropdown = require('./directives/ngDropdown');
 
-var imgService = require('./test/js/img_service');
+var adminService = require('./admin/js/admin_service');
 var feedbackService = require('./feedback/js/feedback_service');
 var newsService = require('./new/js/news_service');
 var worksService = require('./our-works/js/works_service');
+var corouselService = require('./carousel/js/carousel_service');
 
 var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngResource', 'ngSticky'])
 
@@ -68,9 +73,18 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
     })
     .state('index.newFull', {
       url: '/news/:id',
-      templateUrl: 'new/new-full.html',
-      controller: newsIdController,
-      controllerAs: 'ctrl'
+      views: {
+        '': {
+          templateUrl: 'new/new-full.html',
+          controller: newsIdController,
+          controllerAs: 'ctrl'
+        },
+        'carousel@index.newFull': {
+          templateUrl: 'carousel/carousel.html',
+          controller: carouselController,
+          controllerAs: 'ctrl'
+        }
+      }
     })
     .state('index.feedback', {
       url: '/feedback',
@@ -102,11 +116,30 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
       controller: serviceDesignController,
       controllerAs: 'ctrl'
     })
-    .state('index.img', {
-      url: '/add-img',
-      templateUrl: 'test/add-img.html',
-      controller: imgController,
-      controllerAs: 'ctrl'
+    .state('index.admin', {
+      url: '/admin-page',      
+      views: {
+        '': {
+          templateUrl: 'admin/admin.html',
+          controller: adminController,
+          controllerAs: 'ctrl'
+        },
+        'news@index.admin': {
+          templateUrl: 'admin/admin-news.html',
+          controller: adminNewsController,
+          controllerAs: 'ctrl'
+        },
+        'feedback@index.admin': {
+          templateUrl: 'admin/admin-feedback.html',
+          controller: adminFeedbackController,
+          controllerAs: 'ctrl'
+        },
+        'project@index.admin': {
+          templateUrl: 'admin/admin-project.html',
+          controller: adminWorkController,
+          controllerAs: 'ctrl'
+        }
+      }
     })
 })
 
@@ -122,9 +155,14 @@ var app = angular.module('app', ['ngFileUpload', 'ngDropdown', 'ui.router', 'ngR
 .controller('serviceBuildingController', [serviceBuildingController])
 .controller('serviceRepairController', [serviceRepairController])
 .controller('serviceDesignController', [serviceDesignController])
-.controller('imgController', ['imgService', 'newsService', 'feedbackService', 'worksService', serviceDesignController])
+.controller('carouselController', ['corouselService', carouselController])
+.controller('adminController', ['adminService', 'newsService', 'feedbackService', 'worksService', adminController])
+.controller('adminNewsController', ['adminService', 'newsService', adminNewsController])
+.controller('adminFeedbackController', ['adminService', 'feedbackService', adminFeedbackController])
+.controller('adminWorkController', ['adminService', 'worksService', adminWorkController])
 
-.factory('imgService', ['$resource', imgService])
+.factory('adminService', ['$resource', adminService])
 .factory('feedbackService', ['$resource', feedbackService])
 .factory('newsService', ['$resource', newsService])
-.factory('worksService', ['$resource', worksService]);
+.factory('worksService', ['$resource', worksService])
+.factory('corouselService', ['$resource', corouselService]);

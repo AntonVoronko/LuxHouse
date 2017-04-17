@@ -20,7 +20,7 @@ module.exports = {
   if (query.type) {
   	var pagin = 'WHERE worktype = "' + query.type + '"';
   }
-  console.log('SELECT * FROM works ' + pagin + ';');
+  // console.log('SELECT * FROM works ' + pagin + ';');
   connection.query('SELECT * FROM works ' + pagin + ' LIMIT ' + query.limit +' OFFSET ' + query.offset + ';', function (err, rows) {
 	  if (!err) {
 	    callback(null, { works: rows });
@@ -44,6 +44,7 @@ module.exports = {
 	  }
 	})
   },
+  
   addWorks: function (works, callback) {
 	connection.query('INSERT INTO works(img, adress, area, user_id, worktype)' +
 		'VALUES (' + [

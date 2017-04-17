@@ -1,0 +1,147 @@
+<main class="admin">
+<div class="container">
+	<div class="row">
+		<div class="col-md-3 col-lg-3">
+			<ul class="menu-for-catalog">
+				<li ng-click="ctrl.showAPi('news')">Новости</li>
+				<li ng-click="ctrl.showAPi('projects')">Проекты</li>
+				<li ng-click="ctrl.showAPi('feedback')">Отзывы</li>
+			</ul>
+		</div>
+		<div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'news'">
+			<ul class="tabs">
+				<li ng-click="ctrl.showTab(1)">Добавить новость</li>
+				<li ng-click="ctrl.showTab(2)">Показать все новости</li>
+				<li ng-click="ctrl.showTab(3)">Изменить новость</li>
+			</ul>
+			<div class="box-for-content" ng-if="ctrl.newsTabs == 1">
+				<!-- <form name="ctrl.upload_form"> -->
+					<p class="label-in-form">Заголовок для новости:</p>
+					<input type="text"
+					ng-model="ctrl.news.title">
+					<p class="label-in-form">Текст новости</p> 
+					<textarea class="area-news"
+					ng-model="ctrl.news.text"></textarea>
+					<!-- <p class="label-in-form">Необходимо выбрать картинку для загрузки в новости!</p>
+	            	<input 
+	              	type="file" 
+	               	ngf-select 
+	               	ng-model="ctrl.file" 
+	               	name="file" 
+	               	ngf-pattern="'image/*'"
+	               	accept="image/*" 
+	               	ngf-max-size="20MB" 
+	               	/>
+	            	<p>Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+	            	<i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+	            	<i ng-show="ctrl.upload_form.file.$error.maxSize">File too large 
+	            	{{ctrl.file.size / 1000000|number:1}}MB: max 20M</i></p> -->
+	            	<button ng-click="ctrl.addNews()">Добавить новую новость</button>
+	            	<p>{{ctrl.progress}}</p>
+	        	</form>
+			</div>
+			<div class="box-for-content" ng-if="ctrl.newsTabs == 2">
+				<div class="box-for-news"
+				ng-repeat="news in ctrl.news">
+					<h4 ng-bind="news.title"></h4>
+					<p ng-bind="news.text"></p>
+					<button ng-click="ctrl.getNew(news.id)">Внести изменения в новость</button>
+					<button ng-click="ctrl.getPhotos(news.id, 'news')">Работа с фото закрепленных за этой новостью</button>
+					<button ng-click="ctrl.deleteNew(news.id)">Удалить новость</button>
+				</div>
+			</div>
+			<div class="box-for-content" ng-if="ctrl.newsTabs == 3">
+
+				<p class="label-in-form">Дата создания новости:</p>
+				<input type="text"
+				ng-model="ctrl.newId.date">
+				<p class="label-in-form">Заголовок для новости:</p>
+				<input type="text"
+				ng-model="ctrl.newId.title">
+				<p class="label-in-form">Текст новости</p> 
+				<textarea class="area-news"
+				ng-model="ctrl.newId.text"></textarea>
+				<button ng-click="ctrl.saveChangeNew()">Сохранить изменения в новости</button>
+			</div>
+			<div class="box-for-content" ng-if="ctrl.newsTabs == 4">
+			<form name="ctrl.upload_form">
+				<div class="add-photo">
+					<input 
+	              	type="file" 
+	               	ngf-select 
+	               	ng-model="ctrl.file" 
+	               	name="file" 
+	               	ngf-pattern="'image/*'"
+	               	accept="image/*" 
+	               	ngf-max-size="20MB" 
+	               	/>
+	            	<p>Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+	            	<i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+	            	<i ng-show="ctrl.upload_form.file.$error.maxSize">File too large 
+	            	{{ctrl.file.size / 1000000|number:1}}MB: max 20M</i></p>
+	            	<button type="submit" ng-click="ctrl.submit()">Добавить фото</button>
+	            	<p>{{ctrl.progress}}</p>
+				</div>
+			</form>
+				<p class="label-in-form">Все фото:</p>
+				<div ng-repeat="photo in ctrl.photos" ng-show="photo.id">
+					<img ng-src="{{photo.name}}" alt="">
+					<!-- <img src="http://localhost:3000/public/uploads/eewwewe.jpg" alt=""> -->
+					<button ng-click="ctrl.deletePhoto(photo, $index)">Удалить новость</button>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'projects'">
+			<p>Адресс:</p>
+			<input type="text" ng-model="ctrl.project.adress">
+			<p>Площадь:</p>
+			<input type="text" ng-model="ctrl.project.area">
+			<p>Тип работ:</p>
+			<input type="text" ng-model="ctrl.project.type">
+			<form  name="ctrl.upload_form">
+               Необходимо выбрать картинку для загрузки!
+            <input 
+               type="file" 
+               ngf-select 
+               ng-model="ctrl.file" 
+               name="file" 
+               ngf-pattern="'image/*'"
+               accept="image/*" 
+               ngf-max-size="20MB" 
+               />
+            Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+            <i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+            <i ng-show="ctrl.upload_form.file.$error.maxSize">File too large 
+            {{ctrl.file.size / 1000000|number:1}}MB: max 20M</i>
+            <button type="submit" ng-click="ctrl.submit()">submit</button>
+            <p>{{ctrl.progress}}</p>
+        </form>
+		</div>
+		<div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'feedback'">
+            <p>Имя хозяина отзыва</p>
+			<input type="name" ng-model="ctrl.feedback.name">
+            <p>Текст отзыва:</p>
+			<textarea ng-model='ctrl.feedback.text'></textarea>
+			<form  name="ctrl.upload_form">
+               Необходимо выбрать картинку для загрузки!
+	            <input 
+	               type="file" 
+	               ngf-select 
+	               ng-model="ctrl.file" 
+	               name="file" 
+	               ngf-pattern="'image/*'"
+	               accept="image/*" 
+	               ngf-max-size="20MB" 
+	               />
+	            Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+	            <i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+	            <i ng-show="ctrl.upload_form.file.$error.maxSize">File too large 
+	            {{ctrl.file.size / 1000000|number:1}}MB: max 20M</i>
+	            <button type="submit" ng-click="ctrl.submit()">submit</button>
+	            <p>{{ctrl.progress}}</p>
+	        </form>	        
+		</div>
+	</div>
+</div>      
+</main>

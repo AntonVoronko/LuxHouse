@@ -1,13 +1,14 @@
 module.exports = newsIdController;
 
-function newsIdController (newsService, $state, $stateParams) {
+
+function newsIdController ($state, $stateParams, newsService) {
 	var self = this;
+  var newsId = $stateParams.id;
 
   this.getNews = function () {
-  	newsService.getNewsId($stateParams.id).$promise.then(
+  	newsService.getNewsId(newsId).$promise.then(
   	  function (data) {
   	  	self.news = data.news;
-        console.log(self.news);
   	  },
   	  function (error) {
   	  	console.log(error);
@@ -17,4 +18,5 @@ function newsIdController (newsService, $state, $stateParams) {
   this.getNews();
 
 };
-newsIdController.$inject = ['newsService', '$state', '$stateParams'];
+
+newsIdController.$inject = ['$state', '$stateParams', 'newsService'];

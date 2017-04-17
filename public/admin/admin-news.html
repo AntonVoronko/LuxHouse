@@ -1,0 +1,72 @@
+<ul class="tabs">
+	<li ng-click="ctrl.showTab(1)">Добавить новость</li>
+	<li ng-click="ctrl.showTab(2)">Показать все новости</li>
+	<li ng-click="ctrl.showTab(3)">Изменить новость</li>
+</ul>
+<div class="box-for-content" ng-if="ctrl.newsTabs == 1">
+	<p class="label-in-form">Заголовок для новости:</p>
+	<input type="text"
+	ng-model="ctrl.news.title">
+	<p class="label-in-form">Текст новости</p> 
+	<textarea class="area-news"
+	ng-model="ctrl.news.text"></textarea>
+    <button ng-click="ctrl.addNews()">Добавить новую новость</button>
+    <p>{{ctrl.progress}}</p>
+</div>
+<div class="box-for-content" ng-if="ctrl.newsTabs == 2">
+	<div class="box-for-news"
+	ng-repeat="news in ctrl.news">
+		<h4 ng-bind="news.title"></h4>
+		<p ng-bind="news.text"></p>
+		<button ng-click="ctrl.getNew(news.id)">Внести изменения в новость</button>
+		<button ng-click="ctrl.getPhotos(news, 'news')">Работа с фото закрепленных за этой новостью</button>
+		<button ng-click="ctrl.deleteNew(news.id)">Удалить новость</button>
+	</div>
+</div>
+<div class="box-for-content" ng-if="ctrl.newsTabs == 3">
+	<p class="label-in-form">Дата создания новости:</p>
+	<input type="text"
+	ng-model="ctrl.newId.date">
+	<p class="label-in-form">Заголовок для новости:</p>
+	<input type="text"
+	ng-model="ctrl.newId.title">
+	<p class="label-in-form">Текст новости</p> 
+	<textarea class="area-news"
+	ng-model="ctrl.newId.text"></textarea>
+	<button ng-click="ctrl.saveChangeNew()">Сохранить изменения в новости</button>
+</div>
+<div class="box-for-content" ng-if="ctrl.newsTabs == 4">
+	<form name="ctrl.upload_form">
+		<div class="add-photo">
+			<input type="file" 
+		    ngf-select 
+		    ng-model="ctrl.file" 
+		    name="file" 
+		    ngf-pattern="'image/*'"
+		    accept="image/*" 
+		    ngf-max-size="20MB"/>
+			<p>Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+			<i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+			<i ng-show="ctrl.upload_form.file.$error.maxSize">File too large {{ctrl.file.size / 1000000|number:1}}MB: max 20M</i></p>
+			<button type="submit"
+			ng-click="ctrl.submit()">Добавить фото</button>
+			<p>{{ctrl.progress}}</p>
+		</div>
+	</form>
+	<p class="label-in-form">Все фото:</p>
+	<div ng-repeat="photo in ctrl.photos"
+	ng-show="photo.id"
+	class="box-info-photo">
+		<img ng-src="{{photo.name}}"
+		alt=""
+		width="200"
+		height="160px">
+		<div class="btn-box">
+			<p ng-if="photo.name == ctrl.dataOneNews.name">Это фото определено, как главное фото новости</p>
+			<button class="btn btn-success"
+			ng-click="ctrl.chooseMainPhoto(photo.id)">Сделать фото главным для новости</button>
+			<button class="btn btn-danger"
+			ng-click="ctrl.deletePhoto(photo, $index)">Удалить фото из новости</button>
+		</div>
+	</div>
+</div>

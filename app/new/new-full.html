@@ -1,33 +1,29 @@
 <main class="news-full">
-
-<div class="line"><div class="cover"></div></div>
-      <h2 class="news__title">Новости</h2>
-    
-    <ul class="back hidden-xs hidden-sm">
-      <li><a ui-sref="index.main" class="back__to-main">Главная</a></li>
-      <li><a href="" class="back__current"> / Новости</a></li>
-      <li><a href="" class="back__current"> / Название новости</a></li>
-    </ul>
-<div class="news__description">
-	<h3 class="news-full__description__title">
-  {{ctrl.news.title}}<span class="news__description__title__date"
-  ng-bind="ctrl.news.date"></span></h3>
-	<p class="news__description__content"
-  ng-bind="ctrl.news.text"></p>
-	
-</div>
-
-<div class="row main__examples hidden-xs hidden-sm">
-        <div class="col-md-4 col-lg-4 main__examples__object">
-            <img src="img/picture_a.jpeg" alt="" class="main__examples__object__img">
-        </div>
-          <div class="col-md-4 col-lg-4 main__examples__object">
-            <img src="img/picture_b.jpg" alt="" class="main__examples__object__img">
-          </div>
-          <div class="col-md-4 col-lg-4 main__examples__object">
-            <img src="img/picture_b.jpg" alt="" class="main__examples__object__img">
-          </div>
-        </div>
-        
-
+    <div class="line">
+      <div class="cover"></div>
+    </div>
+        <h2 class="news__title">Новости</h2>        
+        <ul class="back hidden-xs hidden-sm">
+          <li>
+            <a ui-sref="index.main" class="back__to-main">Главная</a>
+          </li>
+          <li>
+            <a href=""
+            class="back__current"> / Новости</a>
+          </li>
+          <li>
+            <a href=""
+            class="back__current"> / Название новости</a>
+          </li>
+        </ul>
+    <div class="news__description">
+    	  <h3 class="news-full__description__title">
+        {{ctrl.news.title}}
+            <span class="news__description__title__date"
+            ng-bind="ctrl.news.date | date:'yyyy-MM-dd'"></span>
+        </h3>
+    	<p class="news__description__content"
+      ng-bind="ctrl.news.text"></p>    	
+    </div>
+    <div ui-view="carousel"></div>
 </main>

@@ -55,12 +55,10 @@ module.exports = {
   deleteFeedback: function (id, callback) {
     connection.query('DELETE FROM  feedback WHERE id =' + id + ';', function (err, rows) {
     if (!err) {
-      console.log('rows');
-      console.log(rows);
-      callback(null, feedback);
+      callback(null, 'Delete feedback');
     }
     else {
-      console.log(err);
+      callback(err);
     }
   });
   }

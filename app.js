@@ -6,56 +6,57 @@ var methodOverride = require('method-override');
 var viewRoute = require('./router/views');
 var apiRoute = require('./router/api');
 var passport = require('passport');
+var jwt = require('jsonwebtoken');
+var expressJwt = require('express-jwt');
+var AsyncRouter = require("express-async-router").AsyncRouter;
 
 var app = express();
+var router = AsyncRouter();
 var about = express.Router();
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'app',
+  src: true,
+  level: 'trace'
+});
 
 var news = require('./controllers/newsController');
 var feedbacks = require('./controllers/feedbackController');
 var works = require('./controllers/worksController');
 var auth = require('./controllers/authorizationController');
 var saveImg = require('./controllers/imgController');
-// var multer = require('multer');
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+var photos = require('./controllers/photosService');
 
 app.use(express.static(__dirname + '/public'));
 
-//app.use(bodyParser.json());
+// var secret = 'vtlkiai-secret';
 
-// var storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './uploads/')
-//   },
-//   filename: function (req, file, cb) {
-//     var datetimestamp = Date.now();
-//     cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
-//   }
+// app.get('/token', function(req, res) {
+//   var data = {
+//     user:'vitala',
+//     name: 'Vitaliy Tsaruk'
+//   };
+//   return res.json(jwt.sign(data, secret));
 // });
 
-// var upload = multer({
-//   storage: storage
-// }).single('file');
+// app.get('/protected',
+//   expressJwt({secret}),
+//   function (req, res) {
+//     return res.json(req.user)
+//   }
+// );
+
+
+
 
 app.get('/', function (req, res) {
   res.render('index', function (err, html) {
     res.send(html);
   });
 });
-
-// app.post('/upload', function(req, res) {
-//   upload(req,res,function(err){
-//     if (err){
-//       res.json({ error_code: 1, err_desc: err });
-//       return;
-//     }
-//     res.json({error_code:0,err_desc:null});
-//   })
-// });
 
 app.route('/api/news')
   .get(function (req, res) {
@@ -64,19 +65,13 @@ app.route('/api/news')
       res.json(result);
     });
   })
-  .post(function (req, res) {
-      saveImg(req, res, function (err, imgName) {
-    console.log ('req.query'); 
-    console.log (req.query); 
-        if (!err) {
-          console.log(imgName);
-          console.log('imgName');
-          news.addNews(req.query, imgName, function (err, result) {
-            res.json(result);
-          });
-        }
-        else res.json(result);
-      });
+  .post(multipartMiddleware, function (req, res) {
+    news.addNews(req.query, function (err, result) {
+      if(!err)
+        res.json({ message: result })
+      else
+        res.json({ err: err });
+    });
   });
 
 app.route('/api/news/:id')
@@ -87,12 +82,19 @@ app.route('/api/news/:id')
   })
   .put(function (req, res) {
     var result = news.updateNews(req.params.id, req.query, function (err, result) {
-      res.json(result);
+      if (!err)
+        res.json({ message: result })
+      else
+        res.json(err)
+        ;
     });
   })
   .delete(function (req, res) {
     var result = news.deleteNews(req.params.id, function (err, result) {
-      res.json(result);
+      if (!err)
+        res.json({ status: 200, message: result })
+      else 
+        res.json({ status: 500, message: 'error' });
     })
   });
 
@@ -145,12 +147,54 @@ app.route('/api/works/:id')
     })
   });
 
+  app.route('/api/photos')
+    .get(function (req, res) {
+      photos.getPhotos(req.query, function (err, rows) {
+        if (!err)
+          res.json({ photos: rows })
+        else
+          res.json({ message: err });
+      })
+    })
+    .post(multipartMiddleware, function (req, res) {
+      saveImg(req, res, function (err, imgName) {
+        if (!err) {
+          photos.addPhoto(imgName, req.body.type , req.body.id, function(err, result) {
+            if (!err) {
+              res.json({ message: 'Your news added successfully'});
+            } else {
+              console.log(err);
+              res.json({ message: err });
+            }
+          })
+        }
+        else res.json(err);
+      });
+  });
+    
+  app.route('/api/photos/:id')
+    .delete(function (req, res) {
+      photos.deletePhoto(req.params.id, function (err, result) {
+        if (!err) {
+          res.json({ message: result })
+        }
+        else {
+          res.json({ err: err });
+        }
+      })
+    })
+
   app.route('/api/login')
   .post(function (req, res) {
     var result = auth.addUser(req.query, function(err, result) {
       res.json(result);
     });
   });
+
+  app.route('/upload/:path')
+    .get(function(req, res) {
+       res.sendFile(req.params.path);
+    })
 
   app.use(function(req, res, next) {
   res.status(404).sendFile(__dirname + '/public/index.html');

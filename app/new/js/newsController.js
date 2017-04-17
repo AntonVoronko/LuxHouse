@@ -7,7 +7,6 @@ function newsController (newsService) {
   	newsService.getNews().$promise.then(
   	  function (data) {
   	  	self.news = data.news;
-  	  	console.log(data);
   	  },
   	  function (error) {
   	  	console.log(error);
@@ -17,4 +16,5 @@ function newsController (newsService) {
   this.getNews();
 
 };
+
 newsController.$inject = ['newsService'];

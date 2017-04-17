@@ -15,10 +15,11 @@ function feedbackService ($resource) {
 		    }
 	    },
       update: {
-	  	  metod: 'PATCH',
+	  	  metod: 'PUT',
 	  	  params: {
 	  	    id: '@id',
-	  	    name: '@name'
+	  	    name: '@name',
+          text: '@text'
 	  	  }
 	    }
 	  }
@@ -52,10 +53,15 @@ function feedbackService ($resource) {
   };
 
   this.updateFeedback = function (option) {
-  	return resource.update({
-  	  feedback_id: option.id,
-  	  name: option.name
-  	});
+  	return resource.update(
+      {
+    	  feedback_id: option.id
+      },
+      {
+    	  name: option.name,
+        text: option.text
+    	}
+    );
   };
 
   this.deleteFeedback = function (id) {

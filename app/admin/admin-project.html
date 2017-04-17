@@ -1,0 +1,26 @@
+<div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'projects'">
+			<p>Адресс:</p>
+			<input type="text" ng-model="ctrl.project.adress">
+			<p>Площадь:</p>
+			<input type="text" ng-model="ctrl.project.area">
+			<p>Тип работ:</p>
+			<input type="text" ng-model="ctrl.project.type">
+			<form  name="ctrl.upload_form">
+               Необходимо выбрать картинку для загрузки!
+            <input 
+               type="file" 
+               ngf-select 
+               ng-model="ctrl.file" 
+               name="file" 
+               ngf-pattern="'image/*'"
+               accept="image/*" 
+               ngf-max-size="20MB" 
+               />
+            Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+            <i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+            <i ng-show="ctrl.upload_form.file.$error.maxSize">File too large 
+            {{ctrl.file.size / 1000000|number:1}}MB: max 20M</i>
+            <button type="submit" ng-click="ctrl.submit()">submit</button>
+            <p>{{ctrl.progress}}</p>
+        </form>
+		</div>

@@ -1,0 +1,27 @@
+<ul class="tabs">
+	<li ng-click="ctrl.showTab(1)">Добавить отзыв</li>
+	<li ng-click="ctrl.showTab(2)">Показать все отзывы</li>
+	<li ng-click="ctrl.showTab(3)">Изменить отзыв</li>
+</ul>
+<div class="box-for-content" ng-if="ctrl.tabs == 1">
+	<p>Имя хозяина отзыва</p>
+	<input type="name" ng-model="ctrl.feedback.name">
+	<p>Текст отзыва:</p>
+	<textarea ng-model='ctrl.feedback.text'></textarea>
+</div>
+<div class="box-for-content" ng-if="ctrl.tabs == 2">
+	<div ng-repeat="feedback in ctrl.feedbacks">
+		<p ng-bind="feedback.text"></p>
+		<button class="btn btn-warning"
+		ng-click="ctrl.openChangeFeedback(feedback)">Изменить</button>
+		<button class="btn btn-danger"
+		ng-click="ctrl.deleteFeedback(feedback.id)">delete</button>
+	</div>
+</div>
+<div class="box-for-content" ng-if="ctrl.tabs == 3">
+	<p>Изменить пользователя</p>
+	<p>Изменить текст пользователя</p>
+	<textarea ng-model="ctrl.dataFeedback.text"></textarea>
+	<button class="btn btn-warning"
+		ng-click="ctrl.updateFeedback(feedback.id)">Сделать именения в отзыве</button>
+</div>
