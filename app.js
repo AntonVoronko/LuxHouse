@@ -131,14 +131,27 @@ app.route('/api/works')
   })
   .post(function (req, res) {
     var result = works.addWorks(req.query, function (err, result) {
-      res.json(result);
+      if (!err) 
+        res.json({ message: result })
+      else res.json(err);
     });
   });
 
 app.route('/api/works/:id')
+  .get(function (req, res) {
+    works.getSingleWork(req.params.id, function (err, result) {
+      if (!err)
+        res.json(result)
+      else 
+        res.json(err);
+    });
+  })
   .put(function (req, res) {
-    var result = works.updateWorks(req.params.id, req.quer, function (err, result) {
-      res.json(result);
+    works.updateWorks(req.params.id, req.query, function (err, result) {
+      if (!err)
+        res.json({ message: result })
+      else 
+        res.json(err);
     });
   })
   .delete(function (req, res) {

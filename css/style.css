@@ -914,7 +914,7 @@ main {
 .admin .box-for-content p {
   font-size: 15px;
 }
-.admin .box-for-content button {
+.admin .box-for-content button, .admin .box-for-content select {
   font-size: 15px;
   padding: 5px 15px;
   display: block;

@@ -1,4 +1,89 @@
-<div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'projects'">
+<ul class="tabs">
+   <li ng-click="ctrl.showTab(1)">Добавить проект</li>
+   <li ng-click="ctrl.showTab(2)">Показать все проекты</li>
+   <li ng-click="ctrl.showTab(3)">Изменить проект</li>
+</ul>
+<div class="box-for-content" ng-if="ctrl.workTabs == 1">
+   <p class="label-in-form">Адрес проекта:</p>
+   <input type="text"
+   ng-model="ctrl.project.adress">
+   <p class="label-in-form">Площадь проекта:</p>
+   <input type="text"
+   ng-model="ctrl.project.area">
+   <p class="label-in-form">Тип проекта:</p>
+   <select ng-model="ctrl.project.type">
+      <option value="serv">Ремонт</option>
+      <option value="build">Строительство</option>
+      <option value="design">Дизайн</option>
+   </select>
+   <p class="label-in-form">Описание проекта</p> 
+   <textarea class="area-news"
+   ng-model="ctrl.project.description"></textarea>
+    <button ng-click="ctrl.addProject()">Добавить новый проект</button>
+</div>
+<div class="box-for-content" ng-if="ctrl.workTabs == 2">
+   <div class="box-for-news"
+   ng-repeat="work in ctrl.works">
+      <h4 ng-bind="work.adress"></h4>
+      <h4 ng-bind="work.area"></h4>
+      <p ng-bind="work.description"></p>
+      <button ng-click="ctrl.getWork(work.id)">Внести изменения в проект</button>
+      <button ng-click="ctrl.getPhotos(work, 'build')">Работа с фото закрепленными за этим проектом</button>
+      <button ng-click="ctrl.deleteWork(work.id)">Удалить проект</button>
+   </div>
+</div>
+<div class="box-for-content" ng-if="ctrl.workTabs == 3">
+   <p class="label-in-form">Дата создания проекта:</p>
+   <input type="text"
+   ng-model="ctrl.work.date">
+   <p class="label-in-form">Адрес проекта:</p>
+   <input type="text"
+   ng-model="ctrl.work.adress">
+   <p class="label-in-form">Площадь проекта:</p>
+   <input type="text"
+   ng-model="ctrl.work.area">
+   <p class="label-in-form">Описание проекта</p> 
+   <textarea class="area-news"
+   ng-model="ctrl.work.description"></textarea>
+   <button ng-click="ctrl.updateWork()">Сохранить изменения в новости</button>
+</div>
+<div class="box-for-content" ng-if="ctrl.workTabs == 4">
+   <form name="ctrl.upload_form">
+      <div class="add-photo">
+         <input type="file" 
+          ngf-select 
+          ng-model="ctrl.file" 
+          name="file" 
+          ngf-pattern="'image/*'"
+          accept="image/*" 
+          ngf-max-size="20MB"/>
+         <p>Image thumbnail: <img style="width:100px;" ngf-thumbnail="ctrl.file || '/thumb.jpg'"/>
+         <i ng-show="ctrl.upload_form.file.$error.required">*required</i><br>
+         <i ng-show="ctrl.upload_form.file.$error.maxSize">File too large {{ctrl.file.size / 1000000|number:1}}MB: max 20M</i></p>
+         <button type="submit"
+         ng-click="ctrl.submit()">Добавить фото</button>
+         <p>{{ctrl.progress}}</p>
+      </div>
+   </form>
+   <p class="label-in-form">Все фото:</p>
+   <div ng-repeat="photo in ctrl.photos"
+   ng-show="photo.id"
+   class="box-info-photo">
+      <img ng-src="{{photo.name}}"
+      alt=""
+      width="200"
+      height="160px">
+      <div class="btn-box">
+         <p ng-if="photo.name == ctrl.dataOneNews.name">Это фото определено, как главное фото новости</p>
+         <button class="btn btn-success"
+         ng-click="ctrl.chooseMainPhoto(photo.id)">Сделать фото главным для новости</button>
+         <button class="btn btn-danger"
+         ng-click="ctrl.deletePhoto(photo, $index)">Удалить фото из новости</button>
+      </div>
+   </div>
+</div>
+
+<!-- <div class="col-md-9 col-lg-9 catalog" ng-if="ctrl.catalog == 'projects'">
 			<p>Адресс:</p>
 			<input type="text" ng-model="ctrl.project.adress">
 			<p>Площадь:</p>
@@ -24,3 +109,4 @@
             <p>{{ctrl.progress}}</p>
         </form>
 		</div>
+ -->
