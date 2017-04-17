@@ -1,0 +1,50 @@
+{
+  "name": "angular_browserify_gulp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Omar Fouad <me@omarfouad.com> (http://omarfouad.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp": "^3.8.11",
+    "gulp-concat-css": "~2.3.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-minify-css": "~1.2.4",
+    "gulp-notify": "~2.2.0",
+    "gulp-plumber": "~1.1.0",
+    "gulp-rename": "~1.2.2",
+    "gulp-ruby-sass": "^1.0.1",
+    "gulp-webserver": "~0.9.1",
+    "nodemon": "^1.11.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.2",
+    "angular-resource": "~1.5.7",
+    "angular-ui-router": "^0.4.2",
+    "async": "^2.2.0",
+    "body-parser": "^1.15.2",
+    "bunyan": "^1.8.10",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.14.0",
+    "express-async-router": "^0.1.12",
+    "express-jwt": "^5.1.0",
+    "jquery": "^3.1.1",
+    "jsonwebtoken": "^7.3.0",
+    "method-override": "^2.3.7",
+    "multer": "^1.3.0",
+    "mysql": "^2.12.0",
+    "ng-file-upload": "^12.2.13",
+    "owl.carousel": "^2.2.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}
